@@ -1,0 +1,84 @@
+html {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+nav {
+    display: flex;
+    background-color: blueviolet;
+    justify-content: right;
+    opacity: 0;
+    transition: 0.3s;
+    transform: translateX(100vh);
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+nav a {
+    background-color: blueviolet;
+    color: darkslategrey;
+    text-decoration: none;
+    transition: background-color 0.7s;
+    font-size: 0.75em;
+    font-weight: bold;
+    padding: 0.5em;
+}
+
+nav a:hover {
+    background-color: ghostwhite;
+}
+
+nav.open {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+#menuToggler {
+    font-size: 2em;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+p,
+main,
+h1,
+#menuToggler {
+    padding-left: 0.25em;
+}
+
+nav a,
+h1,
+#menuToggler {
+    color: aliceblue;
+}
+
+header {
+    display: flex;
+    background-color: blueviolet;
+    direction: row;
+    align-items: center;
+    justify-content: right;
+    padding: 0.25em;
+}
+
+body,
+h1 {
+    margin: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 500px) {
+    #menuToggler {
+        display: none;
+    }
+    nav {
+        display: flex;
+        flex-direction: row;
+    }
+}
