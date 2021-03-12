@@ -3,10 +3,75 @@
 /* applies to screens smaller than 500px (first breakpoint) */
 /* and above unless overwritten below */
 
+:root {
+  --hue: 150;
+  --dark: hsl(var(--hue), 80%, 50%);
+  --light: hsl(var(--hue), 80%, 90%);
+  font-family: 'Courier New', Courier, monospace;
+}
+
 body {
   background: #fcc;
 } 
 
+header {
+  background-color: var(--dark);
+  color: var(--light);
+  align-items: center;
+  padding-left: 00.25em;
+}
+
+h1, body {
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: right;
+  opacity: 0;
+  transition: 0.3s;
+  transform: translateX(100vh);
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+nav.open {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+nav a {
+  color: darkslategrey;
+  text-decoration: none;
+  transition: background-color 0.7s;
+  font-size: 0.75em;
+  font-weight: bold;
+  padding: 0.5em;
+}
+
+nav a:hover {
+  background-color: ghostwhite;
+}
+
+
+#menuToggler {
+  font-size: 2em;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  padding-right: 0.25em;
+}
+
+#menuToggler a:hover {
+  background-color: black;
+}
+
+p,
+main {
+  padding-left: 0.25em;
+}
 
 
 /* TABLET STYLES */
@@ -17,6 +82,13 @@ body {
   
   body {
     background: #cfc;
+  }
+  #menuToggler {
+    display: none;
+  }
+  nav {
+      display: flex;
+      flex-direction: row;
   } 
 }
 
@@ -30,5 +102,12 @@ body {
 
   body {
     background: #ccf;
-  } 
+  }
+  #menuToggler {
+    display: none;
+  }
+  nav {
+      display: flex;
+      flex-direction: row;
+  }
 }
