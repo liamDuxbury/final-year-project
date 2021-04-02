@@ -8,7 +8,7 @@
 </head>
 <body>
   <header>
-    <section id="topper">
+    <section class="topper">
         <h1>Cooking</h1>
         <nav id="menu">
           <a href="home.html">Home</a>
@@ -16,30 +16,19 @@
           <a href="discover.html">Discover</a>
           <a href="about.html">About</a>
         </nav> 
+        <section class="search">
+          <input class="myQuery"  type="text" placeholder="Search..." aria-label="search">
+          <button id="searchButton">&#128269;</button>
+        </section>
+        <div class="menuToggler">&#8801;</div>
     </section> 
-    <input id="myQuery" placeholder="Search..." aria-label="search">
-    <button id="searchButton">&#128269;</button>
-    <div id="menuToggler">&#8801;</div>
   </header>
   <main>
-    <Section>
-      <img src="pictures/hero_image.jpeg" alt="hero_image" id="heroImage">
-    </Section>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-      in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-    <p>
-      Clicking <button id="myTrigger">Here</button> should trigger the event handler.
-    </p>
+    <section>
+      <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
+      <h2 class="heroText">Cooking Made Simple</h2>
+    </section>
+    <section id="fpTiles"></section>
   </main>
   <script src="js/scripts.js"></script>
 </body>

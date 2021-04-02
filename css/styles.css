@@ -3,15 +3,19 @@
 /* applies to screens smaller than 500px (first breakpoint) */
 /* and above unless overwritten below */
 
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300&display=swap');
+
+
 :root {
   --hue: 150;
   --dark: hsl(var(--hue), 80%, 50%);
   --light: hsl(var(--hue), 80%, 90%);
-  font-family: 'Courier New', Courier, monospace;
+  /* font-family: 'Courier New', Courier, monospace; */
 }
 
 body {
   background: #fcc;
+  font-family: 'Kiwi Maru', serif;
 } 
 
 header {
@@ -24,11 +28,18 @@ header {
 }
 
 h1 {
-  padding-left:  0.25em;
+  padding-left:  1em;
+  padding-bottom: 0.25em;
 }
 
 h1, body {
   margin: 0;
+}
+
+h2 {
+  position: relative;
+  color: ghostwhite;
+  font-size: 2em;
 }
 
 nav {
@@ -39,7 +50,6 @@ nav {
   top: 0;
   transition: 0.3s;
   transform: translateX(100vw);
-  width: fit-content;
   background-color: rgba(0, 200, 50, 0.4);
   align-items: center;
 }
@@ -66,7 +76,7 @@ nav a:hover {
 }
 
 
-#menuToggler {
+.menuToggler {
   font-size: 2em;
   position: fixed;
   top: 0;
@@ -74,27 +84,58 @@ nav a:hover {
   z-index: 1;
 }
 
-#menuToggler a:hover {
+.menuToggler a:hover {
   background-color: black;
 }
 
-#topper {
+.topper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   background-color: var(--dark);
   color: var(--light);
-  align-items: center;
+  align-content: flex-start;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 }
 
-#myQuery {
+.search {
+  display: flex;
+  flex-direction: row;
+  padding-left: em ;
+}
+.search input[type=text]{
+  width:200px;
+  height:25px;
+  border-radius:25px;
+  border: none;
+}
+
+.search button {
+  background-color: var(--hue);
+  position: relative;
+  border-radius: 50px;
+  border-style: none;
+  color: ghostwhite;
+}
+.search button:hover {
+  background-color: ghostwhite;
+}
+
+.myQuery {
   margin-left: 2em;
 }
 
-#heroImage {
-  width: 100vw;
+img.heroImage {
+  width: 100%;
+}
+
+.heroText {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* TABLET STYLES */
@@ -107,9 +148,15 @@ nav a:hover {
   body {
     background: #cfc;
   }
-  #menuToggler {
+
+  h1 {
+    font-size: 4em;
+  }
+
+  .menuToggler {
     display: none;
   }
+
   nav {
     display: flex;
     flex-direction: row;
@@ -123,10 +170,19 @@ nav a:hover {
     color: ghostwhite;
     text-decoration: none;
     transition: background-color 0.7s;
-    font-size: 0.75em;
+    font-size: 0.8em;
     font-weight: bold;
     padding: 2em;
-    width: 3em;
+    width: 5vw;
+  }
+
+  .topper {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .search input[type=text]{
+    width:12vw;
   }
 
 }
@@ -143,20 +199,22 @@ nav a:hover {
   body {
     background: #ccf;
   }
-  #menuToggler {
+
+  .menuToggler {
     display: none;
   }
+
   nav {
       display: flex;
       flex-direction: row;
   }
-
   
   body {
     margin-left: 10vw;
     margin-right: 10vw;
   }
-  #heroImage {
+
+  .heroImage, header {
     width: 80vw;
   }
 
