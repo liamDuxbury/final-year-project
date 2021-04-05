@@ -39,7 +39,9 @@ h1, body {
 h2 {
   position: relative;
   color: ghostwhite;
-  font-size: 2em;
+  font-size: 4em;
+  background-color: var(--dark);
+  padding: 0.2em
 }
 
 nav {
@@ -69,6 +71,7 @@ nav a {
   font-weight: bold;
   padding: 2em;
   width: 100vw;
+  text-align: center;
 }
 
 nav a:hover {
@@ -102,8 +105,8 @@ nav a:hover {
 .search {
   display: flex;
   flex-direction: row;
-  padding-left: em ;
 }
+
 .search input[type=text]{
   width:200px;
   height:25px;
@@ -122,10 +125,13 @@ nav a:hover {
   background-color: ghostwhite;
 }
 
-.myQuery {
+#myQuery {
   margin-left: 2em;
 }
 
+.hero {
+  margin-bottom: 2em;
+}
 img.heroImage {
   width: 100%;
 }
@@ -138,6 +144,28 @@ img.heroImage {
   transform: translate(-50%, -50%);
 }
 
+#fpTiles {
+  display: grid;
+  align-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-column-gap:2em;
+  grid-row-gap: 2em;
+}
+
+article {
+  animation: fadeIn 0.8s; 
+}
+
+article :hover{
+  filter: blur(2px);
+  transition: 0.2s;
+}
+
+#fpTiles img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
 /* TABLET STYLES */
 
 @media screen and (min-width: 500px) {
@@ -151,6 +179,8 @@ img.heroImage {
 
   h1 {
     font-size: 4em;
+    padding-left:  0.5em;
+    padding-right: 0.5em;
   }
 
   .menuToggler {
