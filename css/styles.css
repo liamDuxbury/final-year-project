@@ -38,7 +38,7 @@ h1, body {
 
 h2 {
   position: relative;
-  color: ghostwhite;
+  color: var(--light);
   font-size: 4em;
   background-color: var(--dark);
   padding: 0.2em
@@ -66,16 +66,17 @@ nav.open {
 nav a {
   color: ghostwhite;
   text-decoration: none;
-  transition: background-color 0.7s;
   font-size: 0.75em;
   font-weight: bold;
   padding: 2em;
   width: 100vw;
   text-align: center;
+  transition: 0.3s;
 }
 
 nav a:hover {
-  background-color: rgba(0, 200, 50, 0.8);
+  background-color: var(--light);
+  color: var(--dark);
 }
 
 
@@ -120,6 +121,7 @@ nav a:hover {
   border-radius: 50px;
   border-style: none;
   color: ghostwhite;
+  transition: 0.3s;
 }
 .search button:hover {
   background-color: ghostwhite;

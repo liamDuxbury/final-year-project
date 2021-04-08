@@ -32,9 +32,16 @@ async function loadSearch(myQuery) {
   return response.json();
 }
 
-async function doSearch() {
+async function doSearch(ev) {
+  clearResults();
   const result = await loadSearch(myQuery.value);
   result.objectIDs.forEach(insertTile);
+}
+
+function clearResults() {
+  while(fpTiles.firstChild) {
+    fpTiles.firstChild.remove();
+  }
 }
 
 myQuery.addEventListener('change', doSearch);
@@ -53,4 +60,3 @@ async function insertTile(id) {
   const tile = buildTileFromData(obj);
   fpTiles.appendChild(tile);
 }
-
