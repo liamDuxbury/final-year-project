@@ -20,6 +20,115 @@
 //   });
 // }
 
+function generateHeader() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+    <header>
+      <link rel="stylesheet" href="css/styles.css">
+      <section class="topper">
+          <h1>Cooking</h1>
+          <div id="menuToggler">&#8801;</div> 
+          <nav id="menu">
+            <a href="home.html">Home</a>
+            <a href="recipes.html">Recipes</a>
+            <a href="discover.html">Discover</a>
+            <a href="about.html">About</a>
+          </nav> 
+          <section class="search">
+            <input id="myQuery"  type="text" placeholder="Search..." aria-label="search">
+            <button id="searchButton">&#128269;</button>
+          </section>
+      </section> 
+    <header>
+  `
+  document.body.appendChild(template.content);
+  menuToggler.addEventListener('click', ev => {
+  menu.classList.toggle('open');
+  myQuery.addEventListener('change', doSearch);
+});
+
+}
+
+function generateHome() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+      <section class="hero">
+        <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
+        <h2 class="heroText">Cooking Made Simple</h2>
+      </section>
+      <section id="fpTiles"></section>
+  `
+  document.body.appendChild(template.content);
+}
+
+function generateAbout() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+    <p>This is the about page </p>
+  `
+  document.body.appendChild(template.content);
+}
+
+function generateRecipes() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+      <section class="hero">
+        <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
+        <h2 class="heroText">Cooking Made Simple</h2>
+      </section>
+      <section id="fpTiles"></section>
+  `
+  document.body.appendChild(template.content);
+}
+
+
+function generateHome() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+      <section class="hero">
+        <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
+        <h2 class="heroText">Cooking Made Simple</h2>
+      </section>
+      <section id="fpTiles"></section>
+  `
+  document.body.appendChild(template.content);
+}
+
+
+function generateMain(pageName) {
+  switch (pageName) {
+    case "home":
+      generateHome()
+      break;
+    
+    case "about":
+      generateAbout()
+      break;
+
+    case "recipes":
+      generateRecipes()
+      break; 
+
+    case "discover":
+      generateHome()
+      break;  
+  
+    default:
+      break;
+  }
+}
+
+window.onload = function() {
+  var path = window.location.pathname;
+  var page = path.split("/").pop();
+  var pageName = page.split(".")[0]
+  console.log(pageName)
+  generateHeader();
+  generateMain(pageName)
+}
+
+
+
 async function loadObject(id) {
   const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
   const response = await fetch(url);
@@ -44,8 +153,10 @@ function clearResults() {
   }
 }
 
-myQuery.addEventListener('change', doSearch);
-
+function handle(e){
+  if(e.key === "Enter"){
+  }
+}
 function buildTileFromData(obj) {
   const tile = document.createElement("article");
   const img = document.createElement("img");
