@@ -1,5 +1,6 @@
 "use strict";
 
+
 // import unirest from "unirest";
 
 // var req = unirest("GET", "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/479101/information");
@@ -43,18 +44,47 @@ function generateHeader() {
   `
   document.body.appendChild(template.content);
   menuToggler.addEventListener('click', ev => {
-  menu.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
   myQuery.addEventListener('change', doSearch);
-});
+  window.onscroll = function() {
+    if(menuToggler.classList != 'contrast'){
+      menuToggler.classList.toggle('contrast');
+    }
+    if(window.scrollY == 0){
+      menuToggler.classList.toggle('contrast');
+    }
+  }
 
 }
+
+
+async function loadObject(id) {
+  const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
+  const response = await fetch(url);
+  return response.json();
+}
+
+async function loadSearch(myQuery) {
+  let baseURL = `https://collectionapi.metmuseum.org/public/collection/v1/search`;
+  const response = await fetch(`${baseURL}?hasImages=true&q=${myQuery}`);
+  return response.json();
+}
+
+async function doSearch(ev) {
+  clearResults();
+  const result = await loadSearch(myQuery.value);
+  result.objectIDs.forEach(insertTile);
+}
+
+// TODO: Create generic fucntion and use plain text to build DOM || Make the html generated?
 
 function generateHome() {
   const template = document.createElement('template');
   template.innerHTML = `
       <section class="hero">
         <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
-        <h2 class="heroText">Cooking Made Simple</h2>
+        <p class="heroText">Cooking Made Simple</p>
       </section>
       <section id="fpTiles"></section>
   `
@@ -72,24 +102,25 @@ function generateAbout() {
 function generateRecipes() {
   const template = document.createElement('template');
   template.innerHTML = `
-      <section class="hero">
-        <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
-        <h2 class="heroText">Cooking Made Simple</h2>
-      </section>
-      <section id="fpTiles"></section>
+    <p>This is the recipes page </p>
   `
   document.body.appendChild(template.content);
 }
 
-
-function generateHome() {
+function generateDiscover() {
   const template = document.createElement('template');
   template.innerHTML = `
-      <section class="hero">
-        <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
-        <h2 class="heroText">Cooking Made Simple</h2>
-      </section>
-      <section id="fpTiles"></section>
+    <p>This is the discover page </p>
+  `
+  document.body.appendChild(template.content);
+}
+
+function generateDefault() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+    <h1>OOOOooOOOoOOPPPPssss!!!</h>
+    <h2>You are in the wrong neighborhood</h2>
+    <p>This is the discover page </p>
   `
   document.body.appendChild(template.content);
 }
@@ -110,10 +141,11 @@ function generateMain(pageName) {
       break; 
 
     case "discover":
-      generateHome()
+      generateDiscover()
       break;  
   
     default:
+      generateDefault()
       break;
   }
 }
@@ -125,26 +157,6 @@ window.onload = function() {
   console.log(pageName)
   generateHeader();
   generateMain(pageName)
-}
-
-
-
-async function loadObject(id) {
-  const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
-  const response = await fetch(url);
-  return response.json();
-}
-
-async function loadSearch(myQuery) {
-  let baseURL = `https://collectionapi.metmuseum.org/public/collection/v1/search`;
-  const response = await fetch(`${baseURL}?hasImages=true&q=${myQuery}`);
-  return response.json();
-}
-
-async function doSearch(ev) {
-  clearResults();
-  const result = await loadSearch(myQuery.value);
-  result.objectIDs.forEach(insertTile);
 }
 
 function clearResults() {

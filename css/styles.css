@@ -53,8 +53,7 @@ nav.open {
   font-size: 2em;
   opacity: 1;
   transform: translateX(0);
-  z-index: 2;
-
+  z-index: 2; 
 }
 
 nav a {
@@ -78,7 +77,14 @@ nav a:hover {
   position: fixed;
   top: 0;
   right: 0.5em;
-  z-index: 1;
+  z-index: 3;
+  border-radius: 4em;
+  transition: 0.5s;
+}
+
+#menuToggler.contrast {
+  background-color: var(--dark);
+  transform: translate(0, 20%);
 }
 
 #menuToggler a:hover {
@@ -126,6 +132,9 @@ nav a:hover {
 
 .hero {
   margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 img.heroImage {
@@ -133,15 +142,15 @@ img.heroImage {
 }
 
 .heroText {
-  position: relative;
+  position: absolute;
   text-align: center;
   width: 80vw;
-  top: 50%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
 }
 
-h2 {
+.heroText p {
   color: var(--light);
   font-size: 1.5em;
   background-color: var(--dark);
@@ -171,6 +180,8 @@ article :hover{
   height: 150px;
   object-fit: cover;
 }
+
+
 /* TABLET STYLES */
 
 @media screen and (min-width: 500px) {
