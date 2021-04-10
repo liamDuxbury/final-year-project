@@ -49,7 +49,6 @@ nav {
 
 nav.open {
   display: flex;
-  /* justify-content: center; */
   font-size: 2em;
   opacity: 1;
   transform: translateX(0);
@@ -146,11 +145,11 @@ img.heroImage {
   text-align: center;
   width: 80vw;
   left: 50%;
-  top: 50%;
+  top: 17%;
   transform: translate(-50%, -50%);
 }
 
-.heroText p {
+.hero p {
   color: var(--light);
   font-size: 1.5em;
   background-color: var(--dark);
@@ -241,7 +240,13 @@ article :hover{
 
   .heroText {
     position: absolute;
+    top: 45%;
+    transform: translate(-50%, -50%);
     width: 50vw;
+  }
+
+  .hero p {
+    font-size: 4em;
   }
 
   #fpTiles {
@@ -252,6 +257,10 @@ article :hover{
   #fpTiles img {
     width: 100%;
     height: 300px;
+  }
+
+  .search {
+    justify-content: left;
   }
 
 }

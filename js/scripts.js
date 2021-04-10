@@ -170,16 +170,31 @@ function handle(e){
   }
 }
 function buildTileFromData(obj) {
+
   const tile = document.createElement("article");
   const img = document.createElement("img");
+  const dep = document.createElement("p");
   img.src = obj.primaryImageSmall;
   img.alt = obj.title;
+  const department = obj.department
   tile.appendChild(img);
-  return tile;
+  return tile, department;
+}
+
+function buildTileData(tile, department) {
+  const description = document.createElement("section")
+  const title = document.createElement("h3");
+  title.innerHTML = `${tile.alt}`;
+  dep.innerHTML = `${department}`;
+  description.appendChild(title);
+  description.appendChild(dep);
+  return description;
 }
 
 async function insertTile(id) {
   const obj = await loadObject(id);
-  const tile = buildTileFromData(obj);
+  const [tile, department] = buildTileFromData(obj);
+  const tileData = buildTileData(tile, department);
+  tile.appendChild(tileData);
   fpTiles.appendChild(tile);
 }
