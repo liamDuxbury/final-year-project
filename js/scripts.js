@@ -170,31 +170,29 @@ function handle(e){
   }
 }
 function buildTileFromData(obj) {
-
   const tile = document.createElement("article");
+  const tileContainer = document.createElement("section")
   const img = document.createElement("img");
-  const dep = document.createElement("p");
   img.src = obj.primaryImageSmall;
   img.alt = obj.title;
-  const department = obj.department
-  tile.appendChild(img);
-  return tile, department;
+  tileContainer.appendChild(img);
+  tile.appendChild(tileContainer);
+  return tile;
 }
 
-function buildTileData(tile, department) {
-  const description = document.createElement("section")
+function buildTileData(tile) {
+  const tileContainer = tile.firstChild;
   const title = document.createElement("h3");
-  title.innerHTML = `${tile.alt}`;
-  dep.innerHTML = `${department}`;
-  description.appendChild(title);
-  description.appendChild(dep);
-  return description;
+  title.innerHTML = `${tile.firstChild.firstChild.alt}`;
+  tileContainer.classList.add("tileTitle")
+  tileContainer.appendChild(title);
+  return tileContainer;
 }
 
 async function insertTile(id) {
   const obj = await loadObject(id);
-  const [tile, department] = buildTileFromData(obj);
-  const tileData = buildTileData(tile, department);
+  const tile = buildTileFromData(obj);
+  const tileData = buildTileData(tile);
   tile.appendChild(tileData);
   fpTiles.appendChild(tile);
 }

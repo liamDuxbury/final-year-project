@@ -14,7 +14,7 @@
 }
 
 body {
-  background: #fcc;
+  background: ghostwhite;
   font-family: 'Kiwi Maru', serif;
 } 
 
@@ -180,6 +180,15 @@ article :hover{
   object-fit: cover;
 }
 
+h3 {
+  position: absolute;
+  transform: translate(0%, -300%);
+  margin: 0em;
+  font-size: small;
+  color: white;
+  background-color: black;
+  width: 50%;
+}
 
 /* TABLET STYLES */
 
@@ -238,16 +247,17 @@ article :hover{
     margin-bottom: 2em;
   }
 
-  .heroText {
-    position: absolute;
-    top: 45%;
-    transform: translate(-50%, -50%);
-    width: 50vw;
+  .hero p {
+    font-size: 3em;
   }
 
-  .hero p {
-    font-size: 4em;
+  .heroText {
+    position: absolute;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
   }
+
 
   #fpTiles {
     grid-column-gap:2em;
@@ -262,7 +272,6 @@ article :hover{
   .search {
     justify-content: left;
   }
-
 }
 
 /* DESKTOP STYLES */
@@ -291,6 +300,14 @@ article :hover{
 
   .heroImage, header {
     width: 80vw;
+  }
+
+  .hero p {
+    font-size: 4em;
+  }
+
+  h3 {
+    width: 0;
   }
 
 }
