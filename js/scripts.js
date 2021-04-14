@@ -1,26 +1,5 @@
 "use strict";
 
-
-// import unirest from "unirest";
-
-// var req = unirest("GET", "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/479101/information");
-
-// function loadRecipes() {
-  
-//   req.headers({
-//     "x-rapidapi-key": "2c04ac924amshfdf390faa05e15ap152f4cjsncd6af456e587",
-//     "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-//     "useQueryString": true
-//   });
-  
-  
-//   req.end(function (res) {
-//     if (res.error) throw new Error(res.error);
-    
-//     console.log(res.body);
-//   });
-// }
-
 function generateHeader() {
   const template = document.createElement('template');
   template.innerHTML = `
@@ -57,27 +36,6 @@ function generateHeader() {
   }
 
 }
-
-
-async function loadObject(id) {
-  const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
-  const response = await fetch(url);
-  return response.json();
-}
-
-async function loadSearch(myQuery) {
-  let baseURL = `https://collectionapi.metmuseum.org/public/collection/v1/search`;
-  const response = await fetch(`${baseURL}?hasImages=true&q=${myQuery}`);
-  return response.json();
-}
-
-async function doSearch(ev) {
-  clearResults();
-  const result = await loadSearch(myQuery.value);
-  result.objectIDs.forEach(insertTile);
-}
-
-// TODO: Create generic fucntion and use plain text to build DOM || Make the html generated?
 
 function generateHome() {
   const template = document.createElement('template');
@@ -159,6 +117,34 @@ window.onload = function() {
   generateMain(pageName)
 }
 
+async function loadSearch(myQuery) {
+  const limit = 10;
+  // optional query params = diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C%20gluten&number=10&offset=0&type=main%20course
+  let baseURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=${myQuery}&number=${limit}`;
+  let apiHeaders =  {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-key": "2c04ac924amshfdf390faa05e15ap152f4cjsncd6af456e587",
+      "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+    }
+  }
+  const response = await fetch(baseURL, apiHeaders);
+  if (response instanceof Error){
+    console.err(response);
+    return {}
+  }
+  return response.json();
+}
+
+
+async function doSearch(ev) {
+  clearResults();
+  const result = await loadSearch(myQuery.value);
+  debugger;
+  result.results.forEach(insertTile);
+}
+
+
 function clearResults() {
   while(fpTiles.firstChild) {
     fpTiles.firstChild.remove();
@@ -169,12 +155,13 @@ function handle(e){
   if(e.key === "Enter"){
   }
 }
-function buildTileFromData(obj) {
+
+function buildTileFromData(recipe) {
   const tile = document.createElement("article");
   const tileContainer = document.createElement("section")
   const img = document.createElement("img");
-  img.src = obj.primaryImageSmall;
-  img.alt = obj.title;
+  img.src = recipe.image;
+  img.alt = recipe.title;
   tileContainer.appendChild(img);
   tile.appendChild(tileContainer);
   return tile;
@@ -189,9 +176,8 @@ function buildTileData(tile) {
   return tileContainer;
 }
 
-async function insertTile(id) {
-  const obj = await loadObject(id);
-  const tile = buildTileFromData(obj);
+async function insertTile(recipe) {
+  const tile = buildTileFromData(recipe);
   const tileData = buildTileData(tile);
   tile.appendChild(tileData);
   fpTiles.appendChild(tile);
