@@ -1,5 +1,15 @@
 "use strict";
 
+let apiHeaders =  {
+  "method": "GET",
+  "headers": {
+    "x-rapidapi-key": "2c04ac924amshfdf390faa05e15ap152f4cjsncd6af456e587",
+    "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+  }
+}
+
+const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`
+
 function generateHeader() {
   const template = document.createElement('template');
   template.innerHTML = `
@@ -117,22 +127,26 @@ window.onload = function() {
   generateMain(pageName)
 }
 
-async function loadSearch(myQuery) {
-  const limit = 10;
-  // optional query params = diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C%20gluten&number=10&offset=0&type=main%20course
-  let baseURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=${myQuery}&number=${limit}`;
-  let apiHeaders =  {
-    "method": "GET",
-    "headers": {
-      "x-rapidapi-key": "2c04ac924amshfdf390faa05e15ap152f4cjsncd6af456e587",
-      "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
-    }
-  }
-  const response = await fetch(baseURL, apiHeaders);
+async function callAPI(url) {
+  const response = await fetch(url, apiHeaders);
   if (response instanceof Error){
     console.err(response);
     return {}
   }
+  return response;
+}
+
+async function loadSearch(myQuery) {
+  const limit = 10;
+  // optional query params = diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C%20gluten&number=10&offset=0&type=main%20course
+  let searchURL = `${baseRecipeURL}/search?query=${myQuery}&number=${limit}`;
+  const response = await callAPI(searchURL);
+  return response.json();
+}
+
+async function getRecipeInfo(id){
+  let getRecipeURL = `${baseRecipeURL}/${id}/information`;
+  const response = await callAPI(getRecipeURL);
   return response.json();
 }
 
@@ -140,7 +154,6 @@ async function loadSearch(myQuery) {
 async function doSearch(ev) {
   clearResults();
   const result = await loadSearch(myQuery.value);
-  debugger;
   result.results.forEach(insertTile);
 }
 
@@ -156,12 +169,13 @@ function handle(e){
   }
 }
 
-function buildTileFromData(recipe) {
+async function buildTileFromData(recipe) {
   const tile = document.createElement("article");
   const tileContainer = document.createElement("section")
   const img = document.createElement("img");
-  img.src = recipe.image;
-  img.alt = recipe.title;
+  const recipeInformation = await getRecipeInfo(recipe.id);
+  img.src = recipeInformation.image;
+  img.alt = recipeInformation.title;
   tileContainer.appendChild(img);
   tile.appendChild(tileContainer);
   return tile;
@@ -177,7 +191,7 @@ function buildTileData(tile) {
 }
 
 async function insertTile(recipe) {
-  const tile = buildTileFromData(recipe);
+  const tile = await buildTileFromData(recipe);
   const tileData = buildTileData(tile);
   tile.appendChild(tileData);
   fpTiles.appendChild(tile);
