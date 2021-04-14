@@ -14,7 +14,7 @@
 }
 
 body {
-  background: #fcc;
+  background: ghostwhite;
   font-family: 'Kiwi Maru', serif;
 } 
 
@@ -36,14 +36,6 @@ h1, body {
   margin: 0;
 }
 
-h2 {
-  position: relative;
-  color: var(--light);
-  font-size: 4em;
-  background-color: var(--dark);
-  padding: 0.2em
-}
-
 nav {
   position: fixed;
   display: flex;
@@ -52,8 +44,7 @@ nav {
   top: 0;
   transition: 0.3s;
   transform: translateX(100vw);
-  background-color: rgba(0, 200, 50, 0.4);
-  align-items: center;
+  background-color: rgba(0, 200, 50, 0.6);
 }
 
 nav.open {
@@ -61,17 +52,17 @@ nav.open {
   font-size: 2em;
   opacity: 1;
   transform: translateX(0);
+  z-index: 2; 
 }
 
 nav a {
   color: ghostwhite;
   text-decoration: none;
-  font-size: 0.75em;
   font-weight: bold;
-  padding: 2em;
+  padding: 1em;
   width: 100vw;
   text-align: center;
-  transition: 0.3s;
+  transition: background-color 0.7s;
 }
 
 nav a:hover {
@@ -80,15 +71,22 @@ nav a:hover {
 }
 
 
-.menuToggler {
-  font-size: 2em;
+#menuToggler {
+  font-size: 3.5em;
   position: fixed;
   top: 0;
-  right: 0.5em  ;
-  z-index: 1;
+  right: 0.5em;
+  z-index: 3;
+  border-radius: 4em;
+  transition: 0.5s;
 }
 
-.menuToggler a:hover {
+#menuToggler.contrast {
+  background-color: var(--dark);
+  transform: translate(0, 20%);
+}
+
+#menuToggler a:hover {
   background-color: black;
 }
 
@@ -132,8 +130,12 @@ nav a:hover {
 }
 
 .hero {
-  margin-bottom: 2em;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 img.heroImage {
   width: 100%;
 }
@@ -141,17 +143,26 @@ img.heroImage {
 .heroText {
   position: absolute;
   text-align: center;
-  top: 50%;
+  width: 80vw;
   left: 50%;
+  top: 17%;
   transform: translate(-50%, -50%);
+}
+
+.hero p {
+  color: var(--light);
+  font-size: 1.5em;
+  background-color: var(--dark);
+  padding: 0.2em
 }
 
 #fpTiles {
   display: grid;
   align-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-column-gap:2em;
-  grid-row-gap: 2em;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-column-gap:1em;
+  grid-row-gap: 1em;
+  padding: 1em;
 }
 
 article {
@@ -165,9 +176,20 @@ article :hover{
 
 #fpTiles img {
   width: 100%;
-  height: 300px;
+  height: 150px;
   object-fit: cover;
 }
+
+h3 {
+  position: absolute;
+  transform: translate(0%, -300%);
+  margin: 0em;
+  font-size: small;
+  color: white;
+  background-color: black;
+  width: 50%;
+}
+
 /* TABLET STYLES */
 
 @media screen and (min-width: 500px) {
@@ -185,7 +207,15 @@ article :hover{
     padding-right: 0.5em;
   }
 
-  .menuToggler {
+  h2 {
+    position: relative;
+    color: var(--light);
+    font-size: 4em;
+    background-color: var(--dark);
+    padding: 0.2em
+  }
+
+  #menuToggler {
     display: none;
   }
 
@@ -199,11 +229,7 @@ article :hover{
   }
 
   nav a {
-    color: ghostwhite;
-    text-decoration: none;
-    transition: background-color 0.7s;
     font-size: 0.8em;
-    font-weight: bold;
     padding: 2em;
     width: 5vw;
   }
@@ -217,10 +243,36 @@ article :hover{
     width:12vw;
   }
 
+  .hero {
+    margin-bottom: 2em;
+  }
+
+  .hero p {
+    font-size: 3em;
+  }
+
+  .heroText {
+    position: absolute;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+  }
+
+
+  #fpTiles {
+    grid-column-gap:2em;
+    grid-row-gap: 2em;
+  }
+  
+  #fpTiles img {
+    width: 100%;
+    height: 300px;
+  }
+
+  .search {
+    justify-content: left;
+  }
 }
-
-
-
 
 /* DESKTOP STYLES */
 
@@ -232,7 +284,7 @@ article :hover{
     background: #ccf;
   }
 
-  .menuToggler {
+  #menuToggler {
     display: none;
   }
 
@@ -248,6 +300,14 @@ article :hover{
 
   .heroImage, header {
     width: 80vw;
+  }
+
+  .hero p {
+    font-size: 4em;
+  }
+
+  h3 {
+    width: 0;
   }
 
 }
