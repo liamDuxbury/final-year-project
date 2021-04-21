@@ -9,6 +9,7 @@
 :root {
   --hue: 150;
   --dark: hsl(var(--hue), 80%, 50%);
+  --darker: hsl(200, 90%, 90%);
   --light: hsl(var(--hue), 80%, 90%);
   /* font-family: 'Courier New', Courier, monospace; */
 }
@@ -156,14 +157,6 @@ img.heroImage {
   padding: 0.2em
 }
 
-#fpTiles {
-  display: grid;
-  align-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  grid-column-gap:1em;
-  grid-row-gap: 1em;
-  padding: 1em;
-}
 
 article {
   animation: fadeIn 0.8s; 
@@ -174,22 +167,42 @@ article :hover{
   transition: 0.2s;
 }
 
-#fpTiles img {
+#homeTiles {
+  display: grid;
+  align-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-column-gap:1em;
+  grid-row-gap: 1em;
+  padding: 1em;
+}
+
+#homeTiles img {
   width: 100%;
   height: 150px;
   object-fit: cover;
 }
 
-h3 {
+#homeTiles h3 {
   position: absolute;
   transform: translate(0%, -300%);
-  margin: 0em;
-  font-size: small;
+  padding-right: 0.5em;
+  font-size: 0.75em;
+  width: fit-content;
   color: white;
   background-color: black;
-  width: 50%;
+  width: 42%;
 }
 
+.discoverTiles section {
+  border-top: 1em solid var(--darker);
+  border-bottom: 1em solid var(--darker); 
+}
+
+/* DESKTOP STYLES */
+
+@media screen and (max-width: 499px) {
+  /*Instead of a nav drawer, a hotbar might be more user friendly */
+}
 /* TABLET STYLES */
 
 @media screen and (min-width: 500px) {
@@ -259,12 +272,13 @@ h3 {
   }
 
 
-  #fpTiles {
+  #homeTiles {
     grid-column-gap:2em;
     grid-row-gap: 2em;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
   
-  #fpTiles img {
+  #homeTiles img {
     width: 100%;
     height: 300px;
   }
@@ -306,8 +320,8 @@ h3 {
     font-size: 4em;
   }
 
-  h3 {
-    width: 0;
+  #homeTiles h3 {
+    width: 17vw;
   }
 
 }

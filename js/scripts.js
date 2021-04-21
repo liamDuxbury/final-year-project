@@ -8,7 +8,9 @@ let apiHeaders =  {
   }
 }
 
-const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`
+const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`;
+
+const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Burger", "BBQ"];
 
 function generateHeader() {
   const template = document.createElement('template');
@@ -54,7 +56,7 @@ function generateHome() {
         <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
         <p class="heroText">Cooking Made Simple</p>
       </section>
-      <section id="fpTiles"></section>
+      <section id="homeTiles"></section>
   `
   document.body.appendChild(template.content);
 }
@@ -78,7 +80,7 @@ function generateRecipes() {
 function generateDiscover() {
   const template = document.createElement('template');
   template.innerHTML = `
-    <p>This is the discover page </p>
+    <section class="discoverTiles" id="bannerTiles"></section>
   `
   document.body.appendChild(template.content);
 }
@@ -118,10 +120,15 @@ function generateMain(pageName) {
   }
 }
 
-window.onload = function() {
+function getPageName() {
   var path = window.location.pathname;
   var page = path.split("/").pop();
   var pageName = page.split(".")[0]
+  return pageName;
+}
+
+window.onload = function() {
+  var pageName = getPageName();
   console.log(pageName)
   generateHeader();
   generateMain(pageName)
@@ -159,8 +166,8 @@ async function doSearch(ev) {
 
 
 function clearResults() {
-  while(fpTiles.firstChild) {
-    fpTiles.firstChild.remove();
+  while(homeTiles.firstChild) {
+    homeTiles.firstChild.remove();
   }
 }
 
@@ -175,7 +182,7 @@ async function buildTileFromData(recipe) {
   const img = document.createElement("img");
   const recipeInformation = await getRecipeInfo(recipe.id);
   img.src = recipeInformation.image;
-  img.alt = recipeInformation.title;
+  img.alt = recipeInformation.title.substring(0, 25);
   tileContainer.appendChild(img);
   tile.appendChild(tileContainer);
   return tile;
@@ -191,8 +198,20 @@ function buildTileData(tile) {
 }
 
 async function insertTile(recipe) {
+  const pageName = getPageName();
+  const tileClass = document.getElementById(`${pageName}Tiles`);
   const tile = await buildTileFromData(recipe);
   const tileData = buildTileData(tile);
   tile.appendChild(tileData);
-  fpTiles.appendChild(tile);
+  tileClass.appendChild(tile);
+}
+
+async function buildBannerFromRecipes(recipe) {
+
+}
+
+async function insertRecipeBanner(recipe) {
+  const banner = await buildBannerFromRecipes(recipe);
+  const bannerDate = buildBannerData(banner)
+  bannerTiles.appendChild(banner);
 }
