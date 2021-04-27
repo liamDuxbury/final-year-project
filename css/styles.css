@@ -167,7 +167,7 @@ article :hover{
   transition: 0.2s;
 }
 
-#homeTiles {
+.homeTiles section {
   display: grid;
   align-content: center;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -176,20 +176,20 @@ article :hover{
   padding: 1em;
 }
 
-#homeTiles img {
+.homeTiles img {
   width: 100%;
   height: 150px;
   object-fit: cover;
 }
 
-#homeTiles h3 {
+.homeTiles h3 {
   position: absolute;
-  transform: translate(0%, -300%);
+  transform: translate(0%, 300%);
   padding-right: 0.5em;
   font-size: 0.75em;
   width: fit-content;
   color: white;
-  background-color: black;
+  background-color: var(--dark);
   width: 42%;
 }
 
@@ -272,13 +272,13 @@ article :hover{
   }
 
 
-  #homeTiles {
+  .homeTiles {
     grid-column-gap:2em;
     grid-row-gap: 2em;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
   
-  #homeTiles img {
+  .homeTiles img {
     width: 100%;
     height: 300px;
   }
@@ -320,7 +320,7 @@ article :hover{
     font-size: 4em;
   }
 
-  #homeTiles h3 {
+  .homeTiles h3 {
     width: 17vw;
   }
 
