@@ -173,7 +173,7 @@ async function insertTile(recipe, recipeType) {
 async function buildBannerFromRecipes(recipeType) {
   const bannerContainer = document.getElementById(`${recipeType}Banner`);
   const recipeContainer = document.createElement("section");
-  const bannerTitle = document.createElement("h3");
+  const bannerTitle = document.createElement("h2");
   bannerContainer.id = `${recipeType}Banner`;
   recipeContainer.id = `${recipeType}Tiles`;
   bannerTitle.innerHTML = recipeType;

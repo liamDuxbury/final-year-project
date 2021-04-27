@@ -194,8 +194,37 @@ article :hover{
 }
 
 .discoverTiles section {
-  border-top: 1em solid var(--darker);
-  border-bottom: 1em solid var(--darker); 
+  border-bottom: 0.5em solid var(--dark); 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.discoverTiles img {
+  width: 150px;
+  height: 150px;
+  padding: 0.25em;
+}
+
+.discoverTiles h2, h3 {
+  position: absolute;
+  padding-right: 0.5em;
+  width: fit-content;
+  color: white;
+  background-color: var(--dark);
+  
+}
+
+.discoverTiles h2{
+  transform: translate(0%, -50%);
+  font-size: 2em;
+  width: auto;
+}
+
+.discoverTiles h3{
+  transform: translate(0%, 500%);
+  font-size: 0.75em;
+  width: auto;
 }
 
 /* DESKTOP STYLES */
