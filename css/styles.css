@@ -29,8 +29,9 @@ header {
 }
 
 h1 {
-  padding-left:  1em;
+  padding-left:  0.5em;
   padding-bottom: 0.25em;
+  font-size: 3em;
 }
 
 h1, body {
@@ -147,7 +148,7 @@ img.heroImage {
   width: 80vw;
   left: 50%;
   top: 17%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 50%);
 }
 
 .hero p {
@@ -167,7 +168,7 @@ article :hover{
   transition: 0.2s;
 }
 
-.homeTiles section {
+.recipeTiles section {
   display: grid;
   align-content: center;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -176,13 +177,13 @@ article :hover{
   padding: 1em;
 }
 
-.homeTiles img {
+.recipeTiles img {
   width: 100%;
   height: 150px;
   object-fit: cover;
 }
 
-.homeTiles h3 {
+.recipeTiles h3 {
   position: absolute;
   transform: translate(0%, 300%);
   padding-right: 0.5em;
@@ -201,28 +202,32 @@ article :hover{
 }
 
 .discoverTiles img {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
+  padding-right: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 .discoverTiles h2, h3 {
   position: absolute;
   padding-right: 0.5em;
-  width: fit-content;
+  width:min-content;  
   color: white;
   background-color: var(--dark);
   
 }
 
 .discoverTiles h2{
-  transform: translate(0%, -50%);
+  transform: translate(0%, -70%);
   font-size: 2em;
   width: auto;
+  z-index: 1;
 }
 
 .discoverTiles h3{
   transform: translate(0%, 500%);
-  font-size: 0.75em;
+  font-size: 1em;
   width: auto;
 }
 
@@ -253,7 +258,6 @@ article :hover{
     color: var(--light);
     font-size: 4em;
     background-color: var(--dark);
-    padding: 0.2em
   }
 
   #menuToggler {
@@ -295,11 +299,11 @@ article :hover{
   .heroText {
     position: absolute;
     top: 30%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 50%);
     width: 60vw;
   }
 
-  .homeTiles {
+  .recipeTiles {
     display: grid;
     align-content: center;
     grid-column-gap: 1em;
@@ -307,7 +311,7 @@ article :hover{
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
   
-  .homeTiles img {
+  .recipeTiles img {
     width: 100%;
     height: 300px;
   }
@@ -321,7 +325,12 @@ article :hover{
     height: 200px;
   }
 
-  .homeTiles h3 {
+  .discoverTiles h2{
+    width: 15%;
+    transform: translate(0%, -70%);
+  }
+
+  .recipeTiles h3 {
     font-size: 1em;
   }
   
@@ -359,7 +368,7 @@ article :hover{
     font-size: 4em;
   }
 
-  .homeTiles h3 {
+  .recipeTiles h3 {
     width: 17vw;
   }
 

@@ -52,11 +52,11 @@ function generateHeader() {
 function generateHome() {
   const template = document.createElement('template');
   template.innerHTML = `
-      <section class="hero">
-        <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
-        <p class="heroText">Cooking Made Simple</p>
-      </section>
-      <section class="homeTiles"></section>
+    <section class="hero">
+      <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
+      <p class="heroText">Cooking Made Simple</p>
+    </section>
+    <section>
   `
   document.body.appendChild(template.content);
 }
@@ -72,13 +72,14 @@ function generateAbout() {
 function generateRecipes() {
   const template = document.createElement('template');
   template.innerHTML = `
-    <p>This is the recipes page </p>
+    <section class="recipeTiles"></section>
   `
   document.body.appendChild(template.content);
 }
 
 function generateDiscover() {
   const template = document.createElement('template');
+  // Dynamically creating the sections would be preferable
   template.innerHTML = `
     <section class="discoverTiles" id="bannerTiles">
       <section id="VegetarianBanner"></section>
@@ -147,7 +148,7 @@ async function buildTileFromData(recipe) {
   const img = document.createElement("img");
   const recipeInformation = await getRecipeInfo(recipe.id);
   img.src = recipeInformation.image;
-  img.alt = recipeInformation.title.substring(0, 25);
+  img.alt = recipeInformation.title.substring(0, 20);
   tileContainer.appendChild(img);
   tile.appendChild(tileContainer);
   return tile;
@@ -222,16 +223,16 @@ async function doSearch(ev) {
   clearResults();
   const recipeType = myQuery.value;
   const result = await loadSearch(recipeType);
-  const homeSection = document.getElementsByClassName("homeTiles");
+  const homeSection = document.getElementsByClassName("recipeTiles");
   homeSection[0].id = `${recipeType}Tiles`;
   result.results.forEach(recipe => insertTile(recipe, recipeType));
 }
 
 
 function clearResults() {
-  const homeTiles = document.getElementsByClassName("homeTiles");
-  while(homeTiles.firstChild) {
-    homeTiles.firstChild.remove();
+  const recipeTiles = document.getElementsByClassName("recipeTiles");
+  while(recipeTiles.firstChild) {
+    recipeTiles.firstChild.remove();
   }
 }
 
