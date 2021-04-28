@@ -56,7 +56,11 @@ function generateHome() {
       <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
       <p class="heroText">Cooking Made Simple</p>
     </section>
-    <section>
+    <form id="signup">
+      <label for="emailInput">Sign-up today!</label>
+      <input type="search" name="email" id="emailInput">
+      <input type="submit" value="Sign-up">
+    </form>
   `
   document.body.appendChild(template.content);
 }
