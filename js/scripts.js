@@ -8,7 +8,9 @@ let apiHeaders =  {
   }
 }
 
-const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`
+const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`;
+
+const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Indian", "BBQ"];
 
 function generateHeader() {
   const template = document.createElement('template');
@@ -50,11 +52,11 @@ function generateHeader() {
 function generateHome() {
   const template = document.createElement('template');
   template.innerHTML = `
-      <section class="hero">
-        <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
-        <p class="heroText">Cooking Made Simple</p>
-      </section>
-      <section id="fpTiles"></section>
+    <section class="hero">
+      <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
+      <p class="heroText">Cooking Made Simple</p>
+    </section>
+    <section>
   `
   document.body.appendChild(template.content);
 }
@@ -70,17 +72,25 @@ function generateAbout() {
 function generateRecipes() {
   const template = document.createElement('template');
   template.innerHTML = `
-    <p>This is the recipes page </p>
+    <section class="recipeTiles"></section>
   `
   document.body.appendChild(template.content);
 }
 
 function generateDiscover() {
   const template = document.createElement('template');
+  // Dynamically creating the sections would be preferable
   template.innerHTML = `
-    <p>This is the discover page </p>
+    <section class="discoverTiles" id="bannerTiles">
+      <section id="VegetarianBanner"></section>
+      <section id="JapaneseBanner"></section>
+      <section id="NoodlesBanner"></section>
+      <section id="IndianBanner"></section>
+      <section id="BBQBanner"></section>
+    </section>
   `
   document.body.appendChild(template.content);
+  buildBanners();
 }
 
 function generateDefault() {
@@ -118,13 +128,71 @@ function generateMain(pageName) {
   }
 }
 
-window.onload = function() {
+function getPageName() {
   var path = window.location.pathname;
   var page = path.split("/").pop();
   var pageName = page.split(".")[0]
+  return pageName;
+}
+
+window.onload = function() {
+  var pageName = getPageName();
   console.log(pageName)
   generateHeader();
   generateMain(pageName)
+}
+
+async function buildTileFromData(recipe) {
+  const tile = document.createElement("article");
+  const tileContainer = document.createElement("section")
+  const img = document.createElement("img");
+  const recipeInformation = await getRecipeInfo(recipe.id);
+  img.src = recipeInformation.image;
+  img.alt = recipeInformation.title.substring(0, 20);
+  tileContainer.appendChild(img);
+  tile.appendChild(tileContainer);
+  return tile;
+}
+
+function buildTileData(tile) {
+  const tileContainer = tile.firstChild;
+  const title = document.createElement("h3");
+  title.innerHTML = `${tile.firstChild.firstChild.alt}`;
+  tileContainer.classList.add("tileTitle")
+  tileContainer.appendChild(title);
+  return tileContainer;
+}
+
+async function insertTile(recipe, recipeType) {
+  const tileClass = document.getElementById(`${recipeType}Tiles`);
+  const tile = await buildTileFromData(recipe);
+  const tileData = buildTileData(tile);
+  tile.appendChild(tileData);
+  tileClass.appendChild(tile);
+}
+
+async function buildBannerFromRecipes(recipeType) {
+  const bannerContainer = document.getElementById(`${recipeType}Banner`);
+  const recipeContainer = document.createElement("section");
+  const bannerTitle = document.createElement("h2");
+  bannerContainer.id = `${recipeType}Banner`;
+  recipeContainer.id = `${recipeType}Tiles`;
+  bannerTitle.innerHTML = recipeType;
+  bannerContainer.appendChild(bannerTitle);
+  bannerContainer.appendChild(recipeContainer);
+  return bannerContainer;
+}
+
+async function insertRecipeBanner(recipeType) {
+  const banner = await buildBannerFromRecipes(recipeType);
+  const bannerTiles = document.getElementById(`bannerTiles`);
+  bannerTiles.appendChild(banner);
+  const result = await loadSearch(recipeType);
+  result.results.forEach(recipe => insertTile(recipe, recipeType));
+}
+
+async function buildBanners() {
+  disoverTopics.forEach(insertRecipeBanner)
 }
 
 async function callAPI(url) {
@@ -153,14 +221,18 @@ async function getRecipeInfo(id){
 
 async function doSearch(ev) {
   clearResults();
-  const result = await loadSearch(myQuery.value);
-  result.results.forEach(insertTile);
+  const recipeType = myQuery.value;
+  const result = await loadSearch(recipeType);
+  const homeSection = document.getElementsByClassName("recipeTiles");
+  homeSection[0].id = `${recipeType}Tiles`;
+  result.results.forEach(recipe => insertTile(recipe, recipeType));
 }
 
 
 function clearResults() {
-  while(fpTiles.firstChild) {
-    fpTiles.firstChild.remove();
+  const recipeTiles = document.getElementsByClassName("recipeTiles");
+  while(recipeTiles.firstChild) {
+    recipeTiles.firstChild.remove();
   }
 }
 
@@ -169,30 +241,3 @@ function handle(e){
   }
 }
 
-async function buildTileFromData(recipe) {
-  const tile = document.createElement("article");
-  const tileContainer = document.createElement("section")
-  const img = document.createElement("img");
-  const recipeInformation = await getRecipeInfo(recipe.id);
-  img.src = recipeInformation.image;
-  img.alt = recipeInformation.title;
-  tileContainer.appendChild(img);
-  tile.appendChild(tileContainer);
-  return tile;
-}
-
-function buildTileData(tile) {
-  const tileContainer = tile.firstChild;
-  const title = document.createElement("h3");
-  title.innerHTML = `${tile.firstChild.firstChild.alt}`;
-  tileContainer.classList.add("tileTitle")
-  tileContainer.appendChild(title);
-  return tileContainer;
-}
-
-async function insertTile(recipe) {
-  const tile = await buildTileFromData(recipe);
-  const tileData = buildTileData(tile);
-  tile.appendChild(tileData);
-  fpTiles.appendChild(tile);
-}
