@@ -114,7 +114,7 @@ nav a:hover {
   border: none;
 }
 
-.search button {
+.searchButton {
   background-color: var(--hue);
   position: relative;
   border-radius: 50px;
@@ -231,7 +231,7 @@ article :hover{
   width: auto;
 }
 
-form {
+form, .recipeSearch {
   background-color: var(--dark);
   display: grid;
   grid-row-gap: 0.25em;
@@ -240,23 +240,42 @@ form {
   padding: 2em;
 }
 
-form label {
+form label, .recipeSearch label {
   grid-column: 1 / 2;
   justify-self: left;
   color: ghostwhite;
 }
 
-form input[type="search"] {
+form input[type="search"], .recipeSearch input[type="search"] {
   grid-column: 2/ 3;
 }
   
-form input[type="submit"] {
+form input[type="submit"], .recipeSearch button{
   grid-column: 3 / 4;
   color: var(--dark);
   background-color: ghostwhite;
   border:  none;
   font-family: 'Kiwi Maru', serif;
   font-size: 1em;
+}
+
+.recipeSearch {
+  padding: 5em;
+  margin-bottom: 2em;
+}
+
+.recipeSearch label {
+  padding-right: 1em;
+  font-size: 2em;
+}
+
+.recipeSearch button {
+  background-color: var(--dark);
+}
+
+.recipeSearch input[type="text"] {
+  border-radius: 50px;
+  border: none;
 }
 
 /* DESKTOP STYLES */

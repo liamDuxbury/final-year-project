@@ -28,7 +28,7 @@ function generateHeader() {
           </nav> 
           <section class="search">
             <input id="myQuery"  type="text" placeholder="Search..." aria-label="search">
-            <button id="searchButton">&#128269;</button>
+            <button class="searchButton">&#128269;</button>
           </section>
       </section> 
     <header>
@@ -76,9 +76,15 @@ function generateAbout() {
 function generateRecipes() {
   const template = document.createElement('template');
   template.innerHTML = `
+    <section class="recipeSearch">
+      <label for="searchRecipe">What recipe are you looking for?</label>
+      <input id="searchRecipe"  type="text" placeholder="Search..." aria-label="search">
+      <button class="searchButton">&#128269;</button>
+    </section>
     <section class="recipeTiles"></section>
   `
   document.body.appendChild(template.content);
+  // searchRecipe.addEventListener('change', doSearch);
 }
 
 function generateDiscover() {
