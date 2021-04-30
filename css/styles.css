@@ -199,6 +199,7 @@ article :hover{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  background-color: var(--light);
 }
 
 .discoverTiles img {

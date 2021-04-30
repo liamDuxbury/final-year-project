@@ -27,7 +27,7 @@ function generateHeader() {
             <a href="about.html">About</a>
           </nav> 
           <section class="search">
-            <input id="myQuery"  type="text" placeholder="Search..." aria-label="search">
+            <input id="myQuery"  type="text" onfocus="this.value=''" placeholder="Search..." aria-label="search">
             <button class="searchButton">&#128269;</button>
           </section>
       </section> 
@@ -78,7 +78,7 @@ function generateRecipes() {
   template.innerHTML = `
     <section class="recipeSearch">
       <label for="searchRecipe">What recipe are you looking for?</label>
-      <input id="searchRecipe"  type="text" placeholder="Search..." aria-label="search">
+      <input id="searchRecipe"  type="text"  onfocus="this.value=''" placeholder="Search..." aria-label="search">
       <button class="searchButton">&#128269;</button>
     </section>
     <section class="recipeTiles"></section>
