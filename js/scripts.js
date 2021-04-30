@@ -31,7 +31,7 @@ function generateHeader() {
             <button class="searchButton">&#128269;</button>
           </section>
       </section> 
-    <header>
+    </header>
   `
   document.body.appendChild(template.content);
   menuToggler.addEventListener('click', ev => {
@@ -61,6 +61,19 @@ function generateHome() {
       <input type="search" name="email" id="emailInput">
       <input type="submit" value="Sign-up">
     </form>
+    <section class="suggestionTiles">
+      <article class="suggestionBigImg">
+          <img src="pictures/best-chopping-boards-lead.jpg" alt="chopping_board" class="boardImage">
+      </article>
+      <section class="suggestionLittleImg">
+          <article>
+              <img src="pictures/gnocchi-bake.jpg" alt="gnocci-bake_image" class="gnocci-bakeImage">
+          </article>
+          <article>
+              <img src="pictures/meatballs.jpg" alt="meatballs" class="meatballsImage">
+          </article>
+      </section>
+    </section>
   `
   document.body.appendChild(template.content);
 }
