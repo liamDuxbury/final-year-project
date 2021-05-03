@@ -56,15 +56,13 @@ function generateHome() {
       <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
       <p class="heroText">Cooking Made Simple</p>
     </section>
-    <form id="signup">
+    <form class="signup">
       <label for="emailInput">Sign-up today!</label>
       <input type="search" name="email" id="emailInput">
       <input type="submit" value="Sign-up">
     </form>
     <section class="suggestionTiles">
-      <article class="suggestionBigImg">
-          <img src="pictures/best-chopping-boards-lead.jpg" alt="chopping_board" class="boardImage">
-      </article>
+        <img src="pictures/best-chopping-boards-lead.jpg" alt="chopping_board" class="boardImage">
       <section class="suggestionLittleImg">
           <article>
               <img src="pictures/gnocchi-bake.jpg" alt="gnocci-bake_image" class="gnocci-bakeImage">

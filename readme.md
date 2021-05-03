@@ -21,5 +21,7 @@ I have created functions in javascript to generate the header for the webpages, 
 
 I realise that this will make ciewing each page harder and I aplogise for that. Viewing the elements in browser should suffice instead.
 
+I am using an API called Spoonacular to pull recipe info to populate the site.
+
 
 
