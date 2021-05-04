@@ -326,6 +326,11 @@ form input[type="submit"], .recipeSearch button{
   margin: 0px;
   padding: 0px;
 }
+
+.about{
+   background-color: var(--light);
+}
+
 /* DESKTOP STYLES */
 
 @media screen and (max-width: 499px) {
