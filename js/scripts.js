@@ -90,7 +90,20 @@ function generateHome() {
 function generateAbout() {
   const template = document.createElement('template');
   template.innerHTML = `
-    <p>This is the about page </p>
+  <section class="about">
+    <h2>About</h2>
+    <p>
+        Everyone needs to cook, or at the very least, everyone needs to eat. However through my experience,
+        not many are confident or even willing to cook for themselves.As a student, the temptation to order 
+        food or buy ready meals can be overwelhming. My goal is to change that. I want to create a 
+        platform where cooking skills can be aquired and inspiration cultivated.
+    </p>
+    <p>
+        I was very fortunate to be taught to cook at home by my parents which opened the door to home-cooking 
+        for me. I started to research recipes for meals I wanted to try but would never dream of making it
+        myself. I hope to emulate the oppurtunites that I had for others who may have not been able to before.
+    </p>
+  </section>
   `
   document.body.appendChild(template.content);
 }
@@ -130,7 +143,6 @@ function generateDefault() {
   template.innerHTML = `
     <h1>OOOOooOOOoOOPPPPssss!!!</h>
     <h2>You are in the wrong neighborhood</h2>
-    <p>This is the discover page </p>
   `
   document.body.appendChild(template.content);
 }
