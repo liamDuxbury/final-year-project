@@ -28,7 +28,7 @@ function generateHeader() {
           </nav> 
           <section class="search">
             <input id="myQuery"  type="text" onfocus="this.value=''" placeholder="Search..." aria-label="search">
-            <button class="searchButton">&#128269;</button>
+            <button class="searchButton"><a href="recipes.html">&#128269;</a></button>
           </section>
       </section> 
     </header>
@@ -106,7 +106,7 @@ function generateRecipes() {
     <section class="recipeTiles"></section>
   `
   document.body.appendChild(template.content);
-  // searchRecipe.addEventListener('change', doSearch);
+  searchRecipe.addEventListener('change', doSearch);
 }
 
 function generateDiscover() {
@@ -238,7 +238,7 @@ async function callAPI(url) {
 }
 
 async function loadSearch(myQuery) {
-  const limit = 10;
+  const limit = 12;
   // optional query params = diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C%20gluten&number=10&offset=0&type=main%20course
   let searchURL = `${baseRecipeURL}/search?query=${myQuery}&number=${limit}`;
   const response = await callAPI(searchURL);
@@ -254,7 +254,7 @@ async function getRecipeInfo(id){
 
 async function doSearch(ev) {
   clearResults();
-  const recipeType = myQuery.value;
+  const recipeType =((myQuery.value == "") ? searchRecipe.value : myQuery.value);
   const result = await loadSearch(recipeType);
   const homeSection = document.getElementsByClassName("recipeTiles");
   homeSection[0].id = `${recipeType}Tiles`;
@@ -263,7 +263,7 @@ async function doSearch(ev) {
 
 
 function clearResults() {
-  const recipeTiles = document.getElementsByClassName("recipeTiles");
+  const recipeTiles = document.getElementsByClassName("recipeTiles")[0];
   while(recipeTiles.firstChild) {
     recipeTiles.firstChild.remove();
   }
