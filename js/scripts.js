@@ -27,11 +27,11 @@ function generateHeader() {
             <a href="about.html">About</a>
           </nav> 
           <section class="search">
-            <input id="myQuery"  type="text" placeholder="Search..." aria-label="search">
-            <button id="searchButton">&#128269;</button>
+            <input id="myQuery"  type="text" onfocus="this.value=''" placeholder="Search..." aria-label="search">
+            <button class="searchButton">&#128269;</button>
           </section>
       </section> 
-    <header>
+    </header>
   `
   document.body.appendChild(template.content);
   menuToggler.addEventListener('click', ev => {
@@ -49,6 +49,14 @@ function generateHeader() {
 
 }
 
+function generateFooter() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+    <footer></footer>
+  `
+  document.body.appendChild(template.content);
+}
+
 function generateHome() {
   const template = document.createElement('template');
   template.innerHTML = `
@@ -56,7 +64,25 @@ function generateHome() {
       <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
       <p class="heroText">Cooking Made Simple</p>
     </section>
-    <section>
+    <form class="signup">
+      <label for="emailInput">Sign-up today!</label>
+      <input type="search" name="email" id="emailInput">
+      <input type="submit" value="Sign-up">
+    </form>
+    <section class="suggestionTiles">
+      <img src="pictures/best-chopping-boards-lead.jpg" alt="chopping_board" class="boardImage">
+      <p class="boardImageText">10 basic choppping techniques</p>
+      <section class="suggestionLittleImg">
+        <section>
+          <img src="pictures/gnocchi-bake.jpg" alt="gnocci-bake_image" class="gnocci-bakeImage">
+          <p class="gnocciImageText">Italian recipe inspirations</p>
+        </section>
+        <section>
+            <img src="pictures/meatballs.jpg" alt="meatballs" class="meatballsImage">
+            <p class="meatballImageText">Secrets to the perfect meatball</p>
+        </section>
+      </section>
+    </section>
   `
   document.body.appendChild(template.content);
 }
@@ -72,9 +98,15 @@ function generateAbout() {
 function generateRecipes() {
   const template = document.createElement('template');
   template.innerHTML = `
+    <section class="recipeSearch">
+      <label for="searchRecipe">What recipe are you looking for?</label>
+      <input id="searchRecipe"  type="text"  onfocus="this.value=''" placeholder="Search..." aria-label="search">
+      <button class="searchButton">&#128269;</button>
+    </section>
     <section class="recipeTiles"></section>
   `
   document.body.appendChild(template.content);
+  // searchRecipe.addEventListener('change', doSearch);
 }
 
 function generateDiscover() {
@@ -140,6 +172,7 @@ window.onload = function() {
   console.log(pageName)
   generateHeader();
   generateMain(pageName)
+  generateFooter();
 }
 
 async function buildTileFromData(recipe) {

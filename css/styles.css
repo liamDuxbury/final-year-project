@@ -11,21 +11,25 @@
   --dark: hsl(var(--hue), 80%, 50%);
   --darker: hsl(200, 90%, 90%);
   --light: hsl(var(--hue), 80%, 90%);
-  /* font-family: 'Courier New', Courier, monospace; */
+  --pageWidth: 80vw;
 }
 
 body {
-  background: ghostwhite;
   font-family: 'Kiwi Maru', serif;
+  background: ghostwhite;
 } 
 
-header {
+header, footer{
   display: flex;
   flex-direction: row;
   justify-content: right;
   background-color: var(--dark);
   color: var(--light);
   align-items: center;
+}
+
+footer {
+  padding: 3em;
 }
 
 h1 {
@@ -115,7 +119,7 @@ nav a:hover {
   border: none;
 }
 
-.search button {
+.searchButton {
   background-color: var(--hue);
   position: relative;
   border-radius: 50px;
@@ -123,6 +127,7 @@ nav a:hover {
   color: ghostwhite;
   transition: 0.3s;
 }
+
 .search button:hover {
   background-color: ghostwhite;
 }
@@ -132,7 +137,7 @@ nav a:hover {
 }
 
 .hero {
-  margin-bottom: 0;
+  margin-bottom: 0em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -145,7 +150,7 @@ img.heroImage {
 .heroText {
   position: absolute;
   text-align: center;
-  width: 80vw;
+  width: var(--pageWidth);
   left: 50%;
   top: 17%;
   transform: translate(-50%, 50%);
@@ -183,7 +188,7 @@ article :hover{
   object-fit: cover;
 }
 
-.recipeTiles h3 {
+.recipeTiles h3, .suggestionTiles p{
   position: absolute;
   transform: translate(0%, 300%);
   padding-right: 0.5em;
@@ -199,6 +204,7 @@ article :hover{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  background-color: var(--light);
 }
 
 .discoverTiles img {
@@ -231,6 +237,95 @@ article :hover{
   width: auto;
 }
 
+form, .recipeSearch {
+  background-color: var(--dark);
+  display: grid;
+  grid-row-gap: 0.25em;
+  grid-column-gap: 0.5em;
+  grid-template-columns: minmax(max-content, 1fr) 4fr;
+  padding: 2em;
+}
+
+
+form label, .recipeSearch label {
+  grid-column: 1 / 2;
+  justify-self: left;
+  color: ghostwhite;
+}
+
+form input[type="search"], .recipeSearch input[type="search"] {
+  grid-column: 2/ 3;
+}
+  
+form input[type="submit"], .recipeSearch button{
+  grid-column: 3 / 4;
+  color: var(--dark);
+  background-color: ghostwhite;
+  border:  none;
+  font-family: 'Kiwi Maru', serif;
+  font-size: 1em;
+}
+
+.recipeSearch {
+  padding: 5em;
+  margin-bottom: 2em;
+}
+
+.recipeSearch label {
+  padding-right: 1em;
+  font-size: 2em;
+}
+
+.recipeSearch button {
+  background-color: var(--dark);
+}
+
+.recipeSearch input[type="text"] {
+  border-radius: 50px;
+  border: none;
+}
+
+.signup {
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+.suggestionTiles {
+  display: flex;
+  flex-direction: row;
+  height: 600px;
+  width: var(--pageWidth);
+  margin: 0;
+}
+
+.boardImage {
+  height: 600px;
+  width: 60vw;
+  }
+
+.suggestionLittleImg img {
+  height: 300px;
+  width: 20vw;
+}
+
+.suggestionTiles p {
+  width: 30vw;
+  font-size: 2em;
+  justify-content: center;
+}
+
+.suggestionLittleImg p {
+  width: 15vw;
+  font-size: 1em;
+  transform: translate(0%, -300%);
+}
+
+.suggestionLittleImg{
+  display:flex;
+  flex-direction: column;
+  margin: 0px;
+  padding: 0px;
+}
 /* DESKTOP STYLES */
 
 @media screen and (max-width: 499px) {
@@ -241,10 +336,9 @@ article :hover{
 @media screen and (min-width: 500px) {
 
   /* applies to screens wider than 499px */
-
-  
   body {
     background: #cfc;
+    width: var(--pageWidth);
   }
 
   h1 {
@@ -288,10 +382,6 @@ article :hover{
     width:12vw;
   }
 
-  .hero {
-    margin-bottom: 2em;
-  }
-
   .hero p {
     font-size: 3em;
   }
@@ -333,6 +423,15 @@ article :hover{
   .recipeTiles h3 {
     font-size: 1em;
   }
+
+  form {
+    grid-column-gap: 1em;
+  }
+
+  form label {
+    font-size: 1.5em;
+    justify-self: center;
+  }
   
 }
 
@@ -361,7 +460,7 @@ article :hover{
   }
 
   .heroImage, header {
-    width: 80vw;
+    width: var(--pageWidth);
   }
 
   .hero p {

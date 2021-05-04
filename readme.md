@@ -17,5 +17,11 @@ The `css/styles.css` file contains a basic starting template for a responsive pa
 The `js/scripts.js` file contains a simple console.log statement to confirm that it is being executed.
 
 ## Notes
-I have created functions in javascript to generate the header for the webpages, I was finding myself copying & pasting across code constantly.
+I have created functions in javascript to generate the header for the webpages, I was finding myself copying & pasting across code constantly. This also makes the website scalable meaning more pages can be added with ease.
+
+I realise that this will make ciewing each page harder and I aplogise for that. Viewing the elements in browser should suffice instead.
+
+I am using an API called Spoonacular to pull recipe info to populate the site.
+
+
 
