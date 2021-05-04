@@ -17,16 +17,19 @@
 body {
   font-family: 'Kiwi Maru', serif;
   background: ghostwhite;
-  width: var(--pageWidth);
 } 
 
-header {
+header, footer{
   display: flex;
   flex-direction: row;
   justify-content: right;
   background-color: var(--dark);
   color: var(--light);
   align-items: center;
+}
+
+footer {
+  padding: 3em;
 }
 
 h1 {
@@ -185,7 +188,7 @@ article :hover{
   object-fit: cover;
 }
 
-.recipeTiles h3 {
+.recipeTiles h3, .suggestionTiles p{
   position: absolute;
   transform: translate(0%, 300%);
   padding-right: 0.5em;
@@ -290,7 +293,7 @@ form input[type="submit"], .recipeSearch button{
 .suggestionTiles {
   display: flex;
   flex-direction: row;
-  height: 700px;
+  height: 600px;
   width: var(--pageWidth);
   margin: 0;
 }
@@ -301,12 +304,27 @@ form input[type="submit"], .recipeSearch button{
   }
 
 .suggestionLittleImg img {
-  height: auto;
+  height: 300px;
   width: 20vw;
 }
 
+.suggestionTiles p {
+  width: 30vw;
+  font-size: 2em;
+  justify-content: center;
+}
+
+.suggestionLittleImg p {
+  width: 15vw;
+  font-size: 1em;
+  transform: translate(0%, -300%);
+}
+
 .suggestionLittleImg{
-  align-items: center;
+  display:flex;
+  flex-direction: column;
+  margin: 0px;
+  padding: 0px;
 }
 /* DESKTOP STYLES */
 
@@ -320,6 +338,7 @@ form input[type="submit"], .recipeSearch button{
   /* applies to screens wider than 499px */
   body {
     background: #cfc;
+    width: var(--pageWidth);
   }
 
   h1 {

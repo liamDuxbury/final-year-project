@@ -49,6 +49,14 @@ function generateHeader() {
 
 }
 
+function generateFooter() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+    <footer></footer>
+  `
+  document.body.appendChild(template.content);
+}
+
 function generateHome() {
   const template = document.createElement('template');
   template.innerHTML = `
@@ -62,14 +70,17 @@ function generateHome() {
       <input type="submit" value="Sign-up">
     </form>
     <section class="suggestionTiles">
-        <img src="pictures/best-chopping-boards-lead.jpg" alt="chopping_board" class="boardImage">
+      <img src="pictures/best-chopping-boards-lead.jpg" alt="chopping_board" class="boardImage">
+      <p class="boardImageText">10 basic choppping techniques</p>
       <section class="suggestionLittleImg">
-          <article>
-              <img src="pictures/gnocchi-bake.jpg" alt="gnocci-bake_image" class="gnocci-bakeImage">
-          </article>
-          <article>
-              <img src="pictures/meatballs.jpg" alt="meatballs" class="meatballsImage">
-          </article>
+        <section>
+          <img src="pictures/gnocchi-bake.jpg" alt="gnocci-bake_image" class="gnocci-bakeImage">
+          <p class="gnocciImageText">Italian recipe inspirations</p>
+        </section>
+        <section>
+            <img src="pictures/meatballs.jpg" alt="meatballs" class="meatballsImage">
+            <p class="meatballImageText">Secrets to the perfect meatball</p>
+        </section>
       </section>
     </section>
   `
@@ -161,6 +172,7 @@ window.onload = function() {
   console.log(pageName)
   generateHeader();
   generateMain(pageName)
+  generateFooter();
 }
 
 async function buildTileFromData(recipe) {
