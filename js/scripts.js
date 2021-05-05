@@ -232,7 +232,8 @@ async function insertRecipeBanner(recipeType) {
   const banner = await buildBannerFromRecipes(recipeType);
   const bannerTiles = document.getElementById(`bannerTiles`);
   bannerTiles.appendChild(banner);
-  const result = await loadSearch(recipeType);
+  const limit = 6;
+  const result = await loadSearch(recipeType, limit);
   result.results.forEach(recipe => insertTile(recipe, recipeType));
 }
 
@@ -249,8 +250,7 @@ async function callAPI(url) {
   return response;
 }
 
-async function loadSearch(myQuery) {
-  const limit = 12;
+async function loadSearch(myQuery, limit) {
   // optional query params = diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C%20gluten&number=10&offset=0&type=main%20course
   let searchURL = `${baseRecipeURL}/search?query=${myQuery}&number=${limit}`;
   const response = await callAPI(searchURL);
@@ -267,7 +267,8 @@ async function getRecipeInfo(id){
 async function doSearch(ev) {
   clearResults();
   const recipeType =((myQuery.value == "") ? searchRecipe.value : myQuery.value);
-  const result = await loadSearch(recipeType);
+  const limit = 12;
+  const result = await loadSearch(recipeType, limit);
   const homeSection = document.getElementsByClassName("recipeTiles");
   homeSection[0].id = `${recipeType}Tiles`;
   result.results.forEach(recipe => insertTile(recipe, recipeType));
