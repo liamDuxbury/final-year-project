@@ -168,7 +168,12 @@ article {
   animation: fadeIn 0.8s; 
 }
 
-article :hover{
+/* article :hover{
+  filter: blur(2px);
+  transition: 0.2s;
+} */
+
+.discoverTiles img :hover{
   filter: blur(2px);
   transition: 0.2s;
 }
@@ -227,9 +232,11 @@ article :hover{
 
 .discoverTiles h2{
   transform: translate(0%, -70%);
-  font-size: 2em;
+  font-size: 1.5em;
   width: auto;
   z-index: 1;
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 .discoverTiles h3{
@@ -310,7 +317,7 @@ form input[type="submit"], .recipeSearch button{
 }
 
 .suggestionTiles p {
-  width: 100vw;
+  width: 40vw;
   font-size: 1em;
   justify-content: center;
 }
@@ -324,6 +331,11 @@ form input[type="submit"], .recipeSearch button{
   display:flex;
   flex-direction: column;
 }
+
+.about{
+   background-color: var(--light);
+}
+
 /* DESKTOP STYLES */
 
 @media screen and (max-width: 499px) {

@@ -90,7 +90,20 @@ function generateHome() {
 function generateAbout() {
   const template = document.createElement('template');
   template.innerHTML = `
-    <p>This is the about page </p>
+  <section class="about">
+    <h2>About</h2>
+    <p>
+        Everyone needs to cook, or at the very least, everyone needs to eat. However through my experience,
+        not many are confident or even willing to cook for themselves.As a student, the temptation to order 
+        food or buy ready meals can be overwelhming. My goal is to change that. I want to create a 
+        platform where cooking skills can be aquired and inspiration cultivated.
+    </p>
+    <p>
+        I was very fortunate to be taught to cook at home by my parents which opened the door to home-cooking 
+        for me. I started to research recipes for meals I wanted to try but would never dream of making it
+        myself. I hope to emulate the oppurtunites that I had for others who may have not been able to before.
+    </p>
+  </section>
   `
   document.body.appendChild(template.content);
 }
@@ -130,7 +143,6 @@ function generateDefault() {
   template.innerHTML = `
     <h1>OOOOooOOOoOOPPPPssss!!!</h>
     <h2>You are in the wrong neighborhood</h2>
-    <p>This is the discover page </p>
   `
   document.body.appendChild(template.content);
 }
@@ -220,7 +232,8 @@ async function insertRecipeBanner(recipeType) {
   const banner = await buildBannerFromRecipes(recipeType);
   const bannerTiles = document.getElementById(`bannerTiles`);
   bannerTiles.appendChild(banner);
-  const result = await loadSearch(recipeType);
+  const limit = 6;
+  const result = await loadSearch(recipeType, limit);
   result.results.forEach(recipe => insertTile(recipe, recipeType));
 }
 
@@ -237,8 +250,7 @@ async function callAPI(url) {
   return response;
 }
 
-async function loadSearch(myQuery) {
-  const limit = 12;
+async function loadSearch(myQuery, limit) {
   // optional query params = diet=vegetarian&excludeIngredients=coconut&intolerances=egg%2C%20gluten&number=10&offset=0&type=main%20course
   let searchURL = `${baseRecipeURL}/search?query=${myQuery}&number=${limit}`;
   const response = await callAPI(searchURL);
@@ -255,7 +267,8 @@ async function getRecipeInfo(id){
 async function doSearch(ev) {
   clearResults();
   const recipeType =((myQuery.value == "") ? searchRecipe.value : myQuery.value);
-  const result = await loadSearch(recipeType);
+  const limit = 12;
+  const result = await loadSearch(recipeType, limit);
   const homeSection = document.getElementsByClassName("recipeTiles");
   homeSection[0].id = `${recipeType}Tiles`;
   result.results.forEach(recipe => insertTile(recipe, recipeType));
