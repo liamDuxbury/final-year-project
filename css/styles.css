@@ -29,7 +29,10 @@ header, footer{
 }
 
 footer {
-  padding: 3em;
+  height: 5vw;
+  position:relative;
+  bottom:-230px;
+  width:100vw;
 }
 
 h1 {
@@ -163,21 +166,6 @@ img.heroImage {
   padding: 0.2em
 }
 
-
-article {
-  animation: fadeIn 0.8s; 
-}
-
-/* article :hover{
-  filter: blur(2px);
-  transition: 0.2s;
-} */
-
-.discoverTiles img :hover{
-  filter: blur(2px);
-  transition: 0.2s;
-}
-
 .recipeTiles section {
   display: grid;
   align-content: center;
@@ -221,6 +209,17 @@ article {
   padding-bottom: 1em;
 }
 
+
+.discoverTiles img:hover{
+  filter: blur(2px);
+  transition: 0.2s;
+}
+
+.discoverTiles img:hover + h3{
+  transition: 0.2s;
+  display: unset;
+}
+
 .discoverTiles h2, h3 {
   position: absolute;
   padding-right: 0.5em;
@@ -243,6 +242,7 @@ article {
   transform: translate(0%, 500%);
   font-size: 1em;
   width: auto;
+  display: none;
 }
 
 form, .recipeSearch {
@@ -322,9 +322,16 @@ form input[type="submit"], .recipeSearch button{
   justify-content: center;
 }
 
-.suggestionLittleImg p {
+.gnocciImageText, .meatballImageText{
   width: 40vw;
-  transform: translate(0%, -300%);
+}
+
+ p.gnocciImageText {
+  transform: translate(0%, 450%);
+}
+
+p.meatballImageText {
+  transform: translate(0%, 1100%);
 }
 
 .suggestionLittleImg{
@@ -332,10 +339,15 @@ form input[type="submit"], .recipeSearch button{
   flex-direction: column;
 }
 
-.about{
+.about {
    background-color: var(--light);
+   padding: 1em;
 }
 
+.about h2, .about p {
+  padding-left: 0.5em;
+
+}
 /* DESKTOP STYLES */
 
 @media screen and (max-width: 499px) {
@@ -455,6 +467,7 @@ form input[type="submit"], .recipeSearch button{
 
   .suggestionTiles {
     height: 600px;
+    flex-direction: row;
   }
 
   .boardImage {
@@ -477,6 +490,19 @@ form input[type="submit"], .recipeSearch button{
     width: 15vw;
     font-size: 1em;
     transform: translate(0%, -300%);
+  }
+
+  p.gnocciImageText {
+    transform: translate(0%, 700%);
+  }
+  
+  p.meatballImageText {
+    transform: translate(0%, 1000%);
+  }
+
+  footer {
+    width:80vw;
+    bottom:0px;
   }
 }
 
