@@ -28,7 +28,7 @@ function generateHeader() {
           </nav> 
           <section class="search">
             <input id="myQuery"  type="text" onfocus="this.value=''" placeholder="Search..." aria-label="search">
-            <button class="searchButton"><a href="recipes.html">&#128269;</a></button>
+            <button class="searchButton" id="searchButton">&#128269;</button>
           </section>
       </section> 
     </header>
@@ -66,25 +66,22 @@ function generateHome() {
     </section>
     <form class="signup">
       <label for="emailInput">Sign-up today!</label>
-      <input type="search" name="email" id="emailInput">
-      <input type="submit" value="Sign-up">
+      <input type="text" name="email" id="emailInput">
+      <input type="submit" value="Sign-up" id="emailSubmitButton">
     </form>
     <section class="suggestionTiles">
       <img src="pictures/best-chopping-boards-lead.jpg" alt="chopping_board" class="boardImage">
       <p class="boardImageText">10 basic choppping techniques</p>
       <section class="suggestionLittleImg">
-        <section>
           <img src="pictures/gnocchi-bake.jpg" alt="gnocci-bake_image" class="gnocci-bakeImage">
           <p class="gnocciImageText">Italian recipe inspirations</p>
-        </section>
-        <section>
-            <img src="pictures/meatballs.jpg" alt="meatballs" class="meatballsImage">
-            <p class="meatballImageText">Secrets to the perfect meatball</p>
-        </section>
+          <img src="pictures/meatballs.jpg" alt="meatballs" class="meatballsImage">
+          <p class="meatballImageText">Secrets to the perfect meatball</p>
       </section>
     </section>
   `
   document.body.appendChild(template.content);
+  emailInput.addEventListener('change', emailAlert);
 }
 
 function generateAbout() {
@@ -181,9 +178,8 @@ function getPageName() {
 
 window.onload = function() {
   var pageName = getPageName();
-  console.log(pageName)
   generateHeader();
-  generateMain(pageName)
+  generateMain(pageName);
   generateFooter();
 }
 
@@ -287,3 +283,6 @@ function handle(e){
   }
 }
 
+function emailAlert() {
+  alert(`Using email: ${emailInput.value} to signup \n Unfortunately, this feature is still under construction`);
+}
