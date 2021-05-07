@@ -212,21 +212,31 @@ async function insertTile(recipe, recipeType) {
   tileClass.appendChild(tile);
 }
 
-async function buildBannerFromRecipes(recipeType) {
+async function buildBannerFromRecipeType(recipeType) {
   const bannerContainer = document.getElementById(`${recipeType}Banner`);
   const recipeContainer = document.createElement("section");
   const bannerTitle = document.createElement("h2");
+  const left = document.createElement("button");
+  const right = document.createElement("button");
   bannerContainer.id = `${recipeType}Banner`;
   recipeContainer.id = `${recipeType}Tiles`;
   bannerTitle.innerHTML = recipeType;
+  left.innerHTML = "<";
+  right.innerHTML = ">";
+  left.id = "leftButton";
+  right.id = "rightButton";
+  left.classList.add("navButton");
+  right.classList.add("navButton");
   bannerContainer.appendChild(bannerTitle);
   bannerContainer.appendChild(recipeContainer);
+  bannerContainer.appendChild(left);
+  bannerContainer.appendChild(right);
   return bannerContainer;
 }
 
 async function insertRecipeBanner(recipeType) {
-  const banner = await buildBannerFromRecipes(recipeType);
-  const bannerTiles = document.getElementById(`bannerTiles`);
+  const banner = await buildBannerFromRecipeType(recipeType);
+  const bannerTiles = document.getElementById("bannerTiles");
   bannerTiles.appendChild(banner);
   const limit = 6;
   const result = await loadSearch(recipeType, limit);
@@ -285,4 +295,29 @@ function handle(e){
 
 function emailAlert() {
   alert(`Using email: ${emailInput.value} to signup \n Unfortunately, this feature is still under construction`);
+}
+
+function imageSlider(){
+  var slide_index = 1;  
+  displaySlides(slide_index);  
+  function nextSlide(n) {  
+      displaySlides(slide_index += n);  
+  }  
+  function currentSlide(n) {  
+      displaySlides(slide_index = n);  
+  }  
+  function displaySlides(n) {  
+      var i;  
+      var slides = document.getElementsByClassName("showSlide");  
+      if (n > slides.length) { 
+        slide_index = 1 
+      }  
+      if (n < 1) { 
+        slide_index = slides.length 
+      }  
+      for (i = 0; i < slides.length; i++) {  
+          slides[i].style.display = "none";  
+      }  
+      slides[slide_index - 1].style.display = "block";  
+  } 
 }
