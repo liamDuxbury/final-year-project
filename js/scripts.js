@@ -11,6 +11,7 @@ let apiHeaders =  {
 const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`;
 
 const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Indian", "BBQ"];
+var tileIndex = 1;
 
 function generateHeader() {
   const template = document.createElement('template');
@@ -133,6 +134,9 @@ function generateDiscover() {
   `
   document.body.appendChild(template.content);
   buildBanners();
+  displayTiles(tileIndex);
+  document.getElementById("rightButton").addEventListener('click', nextTile(1));
+  document.getElementById("leftButton").addEventListener('click', nextTile(-1));
 }
 
 function generateDefault() {
@@ -243,15 +247,15 @@ async function insertRecipeBanner(recipeType) {
   result.results.forEach(recipe => insertTile(recipe, recipeType));
 }
 
-async function buildBanners() {
-  disoverTopics.forEach(insertRecipeBanner)
+function buildBanners() {
+  disoverTopics.forEach(insertRecipeBanner);
 }
 
 async function callAPI(url) {
   const response = await fetch(url, apiHeaders);
   if (response instanceof Error){
     console.err(response);
-    return {}
+    return {};
   }
   return response;
 }
@@ -297,27 +301,23 @@ function emailAlert() {
   alert(`Using email: ${emailInput.value} to signup \n Unfortunately, this feature is still under construction`);
 }
 
-function imageSlider(){
-  var slide_index = 1;  
-  displaySlides(slide_index);  
-  function nextSlide(n) {  
-      displaySlides(slide_index += n);  
-  }  
-  function currentSlide(n) {  
-      displaySlides(slide_index = n);  
-  }  
-  function displaySlides(n) {  
-      var i;  
-      var slides = document.getElementsByClassName("showSlide");  
-      if (n > slides.length) { 
-        slide_index = 1 
-      }  
-      if (n < 1) { 
-        slide_index = slides.length 
-      }  
-      for (i = 0; i < slides.length; i++) {  
-          slides[i].style.display = "none";  
-      }  
-      slides[slide_index - 1].style.display = "block";  
-  } 
+function nextTile(n) {  
+    displayTiles(tileIndex += n); 
+}  
+
+function currentTile(n) {  
+    displayTiles(tileIndex = n);  
+}  
+
+function displayTiles(n) {  
+    var i;  
+    const bannerContainer = document.getElementById("bannerTiles");
+    bannerContainer.childNodes.forEach(banner => () => {
+      const tileContainer = banner.getElementById("?Tiles");
+      const tiles =  tileContainer.childNodes;
+      if (n > tiles.length) {tileIndex = 1}; 
+      if (n < 1) {tileIndex = tiles.length};
+      for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
+      tiles[tileIndex - 1].style.display = "flex";  
+    });
 }
