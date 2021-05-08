@@ -10,7 +10,7 @@ let apiHeaders =  {
 
 const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`;
 
-const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Indian", "BBQ"];
+const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Indian", "BBQ"]; 
 var tileIndex = 1;
 
 function generateHeader() {
@@ -134,7 +134,7 @@ function generateDiscover() {
   `
   document.body.appendChild(template.content);
   buildBanners();
-  displayInitalTiles(tileIndex);
+  
   /* In order for the image slider to work, each button needs to mutate the images within its container only.
   * I am iterating over the children of each banner to 1. To access the button of each banner and 2. To pass
   * the banner name to the nextTile() function making sure the buttons only effect tiles in their parent container.
@@ -144,14 +144,18 @@ function generateDiscover() {
   for(const banner of children){
     const bannerChildren = banner.children;
     for(const childElement of bannerChildren){
+      const bannerType = banner.id.split("Banner")[0];
       if(childElement.classList[0] != "navButton"){
         continue;
       }
-      if(childElement.id == "rightButton") {
-        debugger;
-        childElement.addEventListener('click', nextTile(1, banner.id));
-      }else if(childElement.id == "leftButton"){
-        childElement.addEventListener('click', nextTile(-1, banner.id));  
+      if(childElement.id == `${bannerType}RightButton`) {
+        childElement.addEventListener('click', () => {
+          nextTile(1, bannerType);
+        });
+      }else if(childElement.id == `${bannerType}LeftButton`){
+        childElement.addEventListener('click', () => {
+          nextTile(-1, bannerType);
+        });
       }
     }
   }
@@ -245,8 +249,8 @@ async function buildBannerFromRecipeType(recipeType) {
   bannerTitle.innerHTML = recipeType;
   left.innerHTML = "<";
   right.innerHTML = ">";
-  left.id = "leftButton";
-  right.id = "rightButton";
+  left.id = `${recipeType}LeftButton`;
+  right.id = `${recipeType}RightButton`;
   left.classList.add("navButton");
   right.classList.add("navButton");
   bannerContainer.appendChild(bannerTitle);
@@ -267,6 +271,7 @@ async function insertRecipeBanner(recipeType) {
 
 function buildBanners() {
   disoverTopics.forEach(insertRecipeBanner);
+  displayInitalTiles(tileIndex);
 }
 
 async function callAPI(url) {
@@ -319,13 +324,9 @@ function emailAlert() {
   alert(`Using email: ${emailInput.value} to signup \n Unfortunately, this feature is still under construction`);
 }
 
-function nextTile(n, bannerName) {  
-    displayTiles(tileIndex += n, bannerName); 
+function nextTile(n, bannerType) {  
+    displayNextTile(tileIndex += n, bannerType); 
 }  
-
-// function currentTile(n, bannerName) {  
-//     displayTiles(tileIndex = n, bannerName);  
-// }  
 
 function displayInitalTiles(){
   var i;  
@@ -335,6 +336,7 @@ function displayInitalTiles(){
     const bannerChildren = banner.children;
     for(const childElement of bannerChildren){
       if(childElement.id == "?Tiles"){
+        debugger;
         const tiles =  childElement.children;
         for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
         tiles[0].style.display = "flex";  
@@ -343,12 +345,11 @@ function displayInitalTiles(){
   }
 }
 
-function displayTiles(n, bannerName) {  
+function displayNextTile(n, bannerType) {  
   var i;  
   const bannerContainer = document.getElementById("bannerTiles");
   const children = bannerContainer.children;
   for(const banner of children){
-    const bannerType = bannerName.split("Banner")[0];
     const bannerChildren = banner.children;
     for(const childElement of bannerChildren){
       if(childElement.id == `${bannerType}Tiles`){

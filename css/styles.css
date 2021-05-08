@@ -199,6 +199,7 @@ img.heroImage {
   justify-content: space-between;
   background-color: var(--light);
   overflow: hidden;
+  transition: 0.4s;
 }
 
 .discoverTiles img {
@@ -355,11 +356,11 @@ p.meatballImageText {
   position: absolute;
 }
 
-#leftButton {
+button[id$="LeftButton"] {
   left: 0.5em;
 }
 
-#rightButton {
+button[id$="RightButton"] {
   right: 0.5em;
 }
 
