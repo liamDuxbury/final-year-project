@@ -133,8 +133,7 @@ function generateDiscover() {
     </section>
   `
   document.body.appendChild(template.content);
-  buildBanners();
-  
+  buildBanners(displayInitalTiles);
   /* In order for the image slider to work, each button needs to mutate the images within its container only.
   * I am iterating over the children of each banner to 1. To access the button of each banner and 2. To pass
   * the banner name to the nextTile() function making sure the buttons only effect tiles in their parent container.
@@ -269,9 +268,12 @@ async function insertRecipeBanner(recipeType) {
   result.results.forEach(recipe => insertTile(recipe, recipeType));
 }
 
-function buildBanners() {
-  disoverTopics.forEach(insertRecipeBanner);
-  displayInitalTiles(tileIndex);
+function buildBanners(callback) {
+  disoverTopics.forEach(insertRecipeBanner)
+  // This is to ensure the tiles have fully loaded before creating the image sliders
+  setTimeout(function () {
+    callback();
+  }, 3000);
 }
 
 async function callAPI(url) {
@@ -335,9 +337,11 @@ function displayInitalTiles(){
   for(const banner of children){
     const bannerChildren = banner.children;
     for(const childElement of bannerChildren){
-      if(childElement.id == "?Tiles"){
-        debugger;
+      if(childElement.id.includes("Tiles")){
         const tiles =  childElement.children;
+        if(tiles.length == 0){
+          continue
+        }
         for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
         tiles[0].style.display = "flex";  
       }
