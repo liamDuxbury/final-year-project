@@ -31,7 +31,6 @@ header, footer{
 footer {
   height: 5vw;
   position:relative;
-  bottom:-230px;
   width:100vw;
 }
 
@@ -289,7 +288,7 @@ form input[type="submit"], .recipeSearch button{
 .suggestionTiles {
   display: flex;
   flex-direction: column ;
-  height: 600px;
+  height: 900px;
   width: var(--pageWidth);
   margin: 0;
 }

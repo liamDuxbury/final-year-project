@@ -11,7 +11,7 @@ let apiHeaders =  {
 const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`;
 
 const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Indian", "BBQ"]; 
-var tileIndex = 1;
+const tileIndex = 1;
 
 function generateHeader() {
   const template = document.createElement('template');
@@ -133,7 +133,13 @@ function generateDiscover() {
     </section>
   `
   document.body.appendChild(template.content);
-  buildBanners(displayInitalTiles);
+  buildBanners(function(){
+    if(window.screen.width < 500){
+      displayInitalTiles;
+    }else{
+      return;
+    }
+  });
   /* In order for the image slider to work, each button needs to mutate the images within its container only.
   * I am iterating over the children of each banner to 1. To access the button of each banner and 2. To pass
   * the banner name to the nextTile() function making sure the buttons only effect tiles in their parent container.
@@ -195,14 +201,14 @@ function generateMain(pageName) {
 }
 
 function getPageName() {
-  var path = window.location.pathname;
-  var page = path.split("/").pop();
-  var pageName = page.split(".")[0]
+  let path = window.location.pathname;
+  let page = path.split("/").pop();
+  let pageName = page.split(".")[0]
   return pageName;
 }
 
 window.onload = function() {
-  var pageName = getPageName();
+  let pageName = getPageName();
   generateHeader();
   generateMain(pageName);
   generateFooter();
@@ -270,10 +276,13 @@ async function insertRecipeBanner(recipeType) {
 
 function buildBanners(callback) {
   disoverTopics.forEach(insertRecipeBanner)
-  // This is to ensure the tiles have fully loaded before creating the image sliders
+  /* This is to ensure the tiles have fully loaded before creating the image sliders
+  I tried using async to ensure the function was awaited before execution but struggled to implement it.
+  The time waited could be less but the WiFi I am using is quite terrible meaning a longer wait is needed.
+  */
   setTimeout(function () {
     callback();
-  }, 3000);
+  }, 4000);
 }
 
 async function callAPI(url) {
@@ -331,7 +340,7 @@ function nextTile(n, bannerType) {
 }  
 
 function displayInitalTiles(){
-  var i;  
+  let i;  
   const bannerContainer = document.getElementById("bannerTiles");
   const children = bannerContainer.children;
   for(const banner of children){
@@ -350,7 +359,7 @@ function displayInitalTiles(){
 }
 
 function displayNextTile(n, bannerType) {  
-  var i;  
+  let i;  
   const bannerContainer = document.getElementById("bannerTiles");
   const children = bannerContainer.children;
   for(const banner of children){
@@ -367,6 +376,8 @@ function displayNextTile(n, bannerType) {
         if (n > tiles.length) {tileIndex = 1}; 
         if (n < 1) {tileIndex = tiles.length};
         for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
+        /* I understand that we are not supposed to use "style" for our webpage styling but it isn't harcoded in html and the slider wouldn't work withou it.
+        */
         tiles[tileIndex - 1].style.display = "flex"; 
       }
     }

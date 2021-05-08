@@ -23,5 +23,10 @@ I realise that this will make ciewing each page harder and I aplogise for that. 
 
 I am using an API called Spoonacular to pull recipe info to populate the site.
 
+## References
+
+[Imageslider](https://www.c-sharpcorner.com/article/creating-an-image-slider-using-javascript-html-and-css-only/) > NOTE: Trying to get this to worked nearly killed me
+[Stackoverflow](https://stackoverflow.com/) > NOTE: I used this many times for various problems and linking every page seemed excessive
+
 
 
