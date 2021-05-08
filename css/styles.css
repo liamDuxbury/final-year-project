@@ -352,17 +352,17 @@ p.meatballImageText {
   font-size: 2em;
   padding: 0.25em;
   border-style: none;
+  position: absolute;
 }
 
 #leftButton {
-  position: absolute;
   left: 0.5em;
 }
 
 #rightButton {
-  position: absolute;
   right: 0.5em;
 }
+
 /* DESKTOP STYLES */
 
 @media screen and (max-width: 499px) {

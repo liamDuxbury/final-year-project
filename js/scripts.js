@@ -134,9 +134,27 @@ function generateDiscover() {
   `
   document.body.appendChild(template.content);
   buildBanners();
-  displayTiles(tileIndex);
-  document.getElementById("rightButton").addEventListener('click', nextTile(1));
-  document.getElementById("leftButton").addEventListener('click', nextTile(-1));
+  displayInitalTiles(tileIndex);
+  /* In order for the image slider to work, each button needs to mutate the images within its container only.
+  * I am iterating over the children of each banner to 1. To access the button of each banner and 2. To pass
+  * the banner name to the nextTile() function making sure the buttons only effect tiles in their parent container.
+  */
+  const bannerContainer = document.getElementById("bannerTiles");
+  const children = bannerContainer.children;
+  for(const banner of children){
+    const bannerChildren = banner.children;
+    for(const childElement of bannerChildren){
+      if(childElement.classList[0] != "navButton"){
+        continue;
+      }
+      if(childElement.id == "rightButton") {
+        debugger;
+        childElement.addEventListener('click', nextTile(1, banner.id));
+      }else if(childElement.id == "leftButton"){
+        childElement.addEventListener('click', nextTile(-1, banner.id));  
+      }
+    }
+  }
 }
 
 function generateDefault() {
@@ -301,23 +319,51 @@ function emailAlert() {
   alert(`Using email: ${emailInput.value} to signup \n Unfortunately, this feature is still under construction`);
 }
 
-function nextTile(n) {  
-    displayTiles(tileIndex += n); 
+function nextTile(n, bannerName) {  
+    displayTiles(tileIndex += n, bannerName); 
 }  
 
-function currentTile(n) {  
-    displayTiles(tileIndex = n);  
-}  
+// function currentTile(n, bannerName) {  
+//     displayTiles(tileIndex = n, bannerName);  
+// }  
 
-function displayTiles(n) {  
-    var i;  
-    const bannerContainer = document.getElementById("bannerTiles");
-    bannerContainer.childNodes.forEach(banner => () => {
-      const tileContainer = banner.getElementById("?Tiles");
-      const tiles =  tileContainer.childNodes;
-      if (n > tiles.length) {tileIndex = 1}; 
-      if (n < 1) {tileIndex = tiles.length};
-      for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
-      tiles[tileIndex - 1].style.display = "flex";  
-    });
+function displayInitalTiles(){
+  var i;  
+  const bannerContainer = document.getElementById("bannerTiles");
+  const children = bannerContainer.children;
+  for(const banner of children){
+    const bannerChildren = banner.children;
+    for(const childElement of bannerChildren){
+      if(childElement.id == "?Tiles"){
+        const tiles =  childElement.children;
+        for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
+        tiles[0].style.display = "flex";  
+      }
+    }
+  }
+}
+
+function displayTiles(n, bannerName) {  
+  var i;  
+  const bannerContainer = document.getElementById("bannerTiles");
+  const children = bannerContainer.children;
+  for(const banner of children){
+    const bannerType = bannerName.split("Banner")[0];
+    const bannerChildren = banner.children;
+    for(const childElement of bannerChildren){
+      if(childElement.id == `${bannerType}Tiles`){
+        const tiles =  childElement.children;
+        /*When intialised, there are not tiles in the banners as the API hasn't been called yet.
+        * This if statement catches this and continues the loop, it will continue for all banners initially.
+        */
+        if(tiles.length == 0){
+          continue;
+        }
+        if (n > tiles.length) {tileIndex = 1}; 
+        if (n < 1) {tileIndex = tiles.length};
+        for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
+        tiles[tileIndex - 1].style.display = "flex"; 
+      }
+    }
+  }
 }
