@@ -10,7 +10,8 @@ let apiHeaders =  {
 
 const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`;
 
-const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Indian", "BBQ"];
+const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Indian", "BBQ"]; 
+var tileIndex = 1;
 
 function generateHeader() {
   const template = document.createElement('template');
@@ -132,7 +133,31 @@ function generateDiscover() {
     </section>
   `
   document.body.appendChild(template.content);
-  buildBanners();
+  buildBanners(displayInitalTiles);
+  /* In order for the image slider to work, each button needs to mutate the images within its container only.
+  * I am iterating over the children of each banner to 1. To access the button of each banner and 2. To pass
+  * the banner name to the nextTile() function making sure the buttons only effect tiles in their parent container.
+  */
+  const bannerContainer = document.getElementById("bannerTiles");
+  const children = bannerContainer.children;
+  for(const banner of children){
+    const bannerChildren = banner.children;
+    for(const childElement of bannerChildren){
+      const bannerType = banner.id.split("Banner")[0];
+      if(childElement.classList[0] != "navButton"){
+        continue;
+      }
+      if(childElement.id == `${bannerType}RightButton`) {
+        childElement.addEventListener('click', () => {
+          nextTile(1, bannerType);
+        });
+      }else if(childElement.id == `${bannerType}LeftButton`){
+        childElement.addEventListener('click', () => {
+          nextTile(-1, bannerType);
+        });
+      }
+    }
+  }
 }
 
 function generateDefault() {
@@ -212,36 +237,50 @@ async function insertTile(recipe, recipeType) {
   tileClass.appendChild(tile);
 }
 
-async function buildBannerFromRecipes(recipeType) {
+async function buildBannerFromRecipeType(recipeType) {
   const bannerContainer = document.getElementById(`${recipeType}Banner`);
   const recipeContainer = document.createElement("section");
   const bannerTitle = document.createElement("h2");
+  const left = document.createElement("button");
+  const right = document.createElement("button");
   bannerContainer.id = `${recipeType}Banner`;
   recipeContainer.id = `${recipeType}Tiles`;
   bannerTitle.innerHTML = recipeType;
+  left.innerHTML = "<";
+  right.innerHTML = ">";
+  left.id = `${recipeType}LeftButton`;
+  right.id = `${recipeType}RightButton`;
+  left.classList.add("navButton");
+  right.classList.add("navButton");
   bannerContainer.appendChild(bannerTitle);
   bannerContainer.appendChild(recipeContainer);
+  bannerContainer.appendChild(left);
+  bannerContainer.appendChild(right);
   return bannerContainer;
 }
 
 async function insertRecipeBanner(recipeType) {
-  const banner = await buildBannerFromRecipes(recipeType);
-  const bannerTiles = document.getElementById(`bannerTiles`);
+  const banner = await buildBannerFromRecipeType(recipeType);
+  const bannerTiles = document.getElementById("bannerTiles");
   bannerTiles.appendChild(banner);
   const limit = 6;
   const result = await loadSearch(recipeType, limit);
   result.results.forEach(recipe => insertTile(recipe, recipeType));
 }
 
-async function buildBanners() {
+function buildBanners(callback) {
   disoverTopics.forEach(insertRecipeBanner)
+  // This is to ensure the tiles have fully loaded before creating the image sliders
+  setTimeout(function () {
+    callback();
+  }, 3000);
 }
 
 async function callAPI(url) {
   const response = await fetch(url, apiHeaders);
   if (response instanceof Error){
     console.err(response);
-    return {}
+    return {};
   }
   return response;
 }
@@ -285,4 +324,51 @@ function handle(e){
 
 function emailAlert() {
   alert(`Using email: ${emailInput.value} to signup \n Unfortunately, this feature is still under construction`);
+}
+
+function nextTile(n, bannerType) {  
+    displayNextTile(tileIndex += n, bannerType); 
+}  
+
+function displayInitalTiles(){
+  var i;  
+  const bannerContainer = document.getElementById("bannerTiles");
+  const children = bannerContainer.children;
+  for(const banner of children){
+    const bannerChildren = banner.children;
+    for(const childElement of bannerChildren){
+      if(childElement.id.includes("Tiles")){
+        const tiles =  childElement.children;
+        if(tiles.length == 0){
+          continue
+        }
+        for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
+        tiles[0].style.display = "flex";  
+      }
+    }
+  }
+}
+
+function displayNextTile(n, bannerType) {  
+  var i;  
+  const bannerContainer = document.getElementById("bannerTiles");
+  const children = bannerContainer.children;
+  for(const banner of children){
+    const bannerChildren = banner.children;
+    for(const childElement of bannerChildren){
+      if(childElement.id == `${bannerType}Tiles`){
+        const tiles =  childElement.children;
+        /*When intialised, there are not tiles in the banners as the API hasn't been called yet.
+        * This if statement catches this and continues the loop, it will continue for all banners initially.
+        */
+        if(tiles.length == 0){
+          continue;
+        }
+        if (n > tiles.length) {tileIndex = 1}; 
+        if (n < 1) {tileIndex = tiles.length};
+        for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
+        tiles[tileIndex - 1].style.display = "flex"; 
+      }
+    }
+  }
 }

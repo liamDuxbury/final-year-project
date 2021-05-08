@@ -199,25 +199,14 @@ img.heroImage {
   justify-content: space-between;
   background-color: var(--light);
   overflow: hidden;
+  transition: 0.4s;
 }
 
 .discoverTiles img {
-  width: 200px;
+  width: 100vw;
   height: 200px;
-  padding-right: 1em;
   padding-top: 1em;
   padding-bottom: 1em;
-}
-
-
-.discoverTiles img:hover{
-  filter: blur(2px);
-  transition: 0.2s;
-}
-
-.discoverTiles img:hover + h3{
-  transition: 0.2s;
-  display: unset;
 }
 
 .discoverTiles h2, h3 {
@@ -239,10 +228,9 @@ img.heroImage {
 }
 
 .discoverTiles h3{
-  transform: translate(0%, 500%);
+  transform: translate(0%, 700%);
   font-size: 1em;
   width: auto;
-  display: none;
 }
 
 form, .recipeSearch {
@@ -346,8 +334,36 @@ p.meatballImageText {
 
 .about h2, .about p {
   padding-left: 0.5em;
-
 }
+
+.about h2 {
+  position: relative;
+  color: var(--light);
+  font-size: 4em;
+  background-color: var(--dark);
+}
+
+.navButton {
+  color: ghostwhite;
+  z-index: 2;
+  border-radius: 10px;
+  background-color: var(--dark);
+  transform: translate(0%, 150%);
+  justify-content: center;
+  font-size: 2em;
+  padding: 0.25em;
+  border-style: none;
+  position: absolute;
+}
+
+button[id$="LeftButton"] {
+  left: 0.5em;
+}
+
+button[id$="RightButton"] {
+  right: 0.5em;
+}
+
 /* DESKTOP STYLES */
 
 @media screen and (max-width: 499px) {
@@ -503,6 +519,32 @@ p.meatballImageText {
   footer {
     width:80vw;
     bottom:0px;
+  }
+
+  .discoverTiles h3 {
+    display: none;
+  }
+
+  .discoverTiles img:hover{
+    filter: blur(2px);
+    transition: 0.2s;
+  }
+  
+  .discoverTiles img:hover + h3{
+    transition: 0.2s;
+    display: unset;
+  }
+
+  .discoverTiles img {
+    width: 200px;
+    height: 200px;
+    padding-right: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+
+  .navButton {
+    display: none;
   }
 }
 
