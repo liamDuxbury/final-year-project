@@ -1,5 +1,7 @@
 "use strict";
 
+import {Recipe} from '../js/recipeClass';
+
 let apiHeaders =  {
   "method": "GET",
   "headers": {
@@ -8,7 +10,7 @@ let apiHeaders =  {
   }
 }
 
-const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/Page`;
+const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`;
 
 const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Indian", "BBQ"]; 
 const tileIndex = 1;
@@ -177,6 +179,7 @@ function generateRecipePage() {
   <p>This is the recipes page </p>
   `
   document.body.appendChild(template.content);
+  let recipe = new Recipe();
 } 
   
 
@@ -239,6 +242,7 @@ async function buildTileFromData(recipe) {
   const tileContainer = document.createElement("section")
   const img = document.createElement("img");
   const recipeInformation = await getRecipeInfo(recipe.id);
+  debugger;
   img.src = recipeInformation.image;
   img.alt = recipeInformation.title.substring(0, 20);
   tileContainer.appendChild(img);
@@ -333,16 +337,16 @@ async function doSearch(ev) {
   const recipeType =((myQuery.value == "") ? searchRecipe.value : myQuery.value);
   const limit = 12;
   const result = await loadSearch(recipeType, limit);
-  const homeSection = document.getElementsByClassName("recipeTiles");
+  const homeSection = document.getElementsByClassName("searchTiles");
   homeSection[0].id = `${recipeType}Tiles`;
   result.results.forEach(recipe => insertTile(recipe, recipeType));
 }
 
 
 function clearResults() {
-  const recipeTiles = document.getElementsByClassName("recipeTiles")[0];
-  while(recipeTiles.firstChild) {
-    recipeTiles.firstChild.remove();
+  const searchTiles = document.getElementsByClassName("searchTiles")[0];
+  while(searchTiles.firstChild) {
+    searchTiles.firstChild.remove();
   }
 }
 
