@@ -29,9 +29,9 @@ header, footer{
 }
 
 footer {
-  height: 4.4em;
-  position:relative;
-  width:100vw;
+  height: 4em;
+  position: relative;
+  width: 100vw;
   display: flex;
   flex-direction: column-reverse;
   align-items: flex-end;
@@ -70,10 +70,11 @@ nav a {
   color: ghostwhite;
   text-decoration: none;
   font-weight: bold;
-  padding: 1em;
+  padding: 0.5em;
   width: 100vw;
   text-align: center;
   transition: background-color 0.7s;
+  left: 0.5em;
 }
 
 nav a:hover {
@@ -366,6 +367,27 @@ button[id$="RightButton"] {
   right: 0.5em;
 }
 
+/* .footerNav {
+  position: relative;
+  display: unset;
+  flex-direction: unset;
+  background-color: var(--dark);
+  font-size: 1em;
+  opacity: 1;
+  color: ghostwhite;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5em;
+  width: 3em;
+  text-align: center;
+  transition: background-color 0.7s;
+  bottom: 0.5em;
+  left: unset;
+  top: 95vh;
+  right: 500px;
+
+} */
+
 /* DESKTOP STYLES */
 
 @media screen and (max-width: 499px) {
@@ -519,6 +541,7 @@ button[id$="RightButton"] {
   }
 
   footer {
+    height: 4.4em;
     width:80vw;
     bottom:0px;
   }

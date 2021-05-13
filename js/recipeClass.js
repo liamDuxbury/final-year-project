@@ -1,4 +1,4 @@
-export default class Recipe{
+class Recipe{
     constructor(){
         this.cheap = null; // false
         this.cookingMinutes = null; // 15
@@ -23,3 +23,5 @@ export default class Recipe{
         this.vegetarian = null; // false
     }
 } 
+
+export { Recipe };

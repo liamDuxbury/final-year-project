@@ -1,6 +1,4 @@
-"use strict";
-
-import {Recipe} from '../js/recipeClass';
+import { Recipe } from "../js/recipeClass";
 
 let apiHeaders =  {
   "method": "GET",
@@ -57,7 +55,7 @@ function generateFooter() {
   template.innerHTML = `
   <footer>
     <nav>
-        <a href="about.html">About</a>
+        <a href="about.html" class="footerNav">About</a>
     </nav>
   </footer>
   `
@@ -180,6 +178,7 @@ function generateRecipePage() {
   `
   document.body.appendChild(template.content);
   let recipe = new Recipe();
+  console.log(recipe);
 } 
   
 
