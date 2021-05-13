@@ -375,7 +375,7 @@ function displayInitalTiles(){
         if(tiles.length == 0){
           continue
         }
-        for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
+        for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"}
         tiles[0].style.display = "flex";  
       }
     }
@@ -397,9 +397,9 @@ function displayNextTile(n, bannerType) {
         if(tiles.length == 0){
           continue;
         }
-        if (n > tiles.length) {tileIndex = 1}; 
-        if (n < 1) {tileIndex = tiles.length};
-        for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"};
+        if (n > tiles.length) {tileIndex = 1} 
+        if (n < 1) {tileIndex = tiles.length}
+        for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"}
         /* I understand that we are not supposed to use "style" for our webpage styling but it isn't harcoded in html and the slider wouldn't work withou it.
         */
         tiles[tileIndex - 1].style.display = "flex"; 
