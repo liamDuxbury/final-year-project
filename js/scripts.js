@@ -8,7 +8,7 @@ let apiHeaders =  {
   }
 }
 
-const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`;
+const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/Page`;
 
 const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Indian", "BBQ"]; 
 const tileIndex = 1;
@@ -17,15 +17,15 @@ function generateHeader() {
   const template = document.createElement('template');
   template.innerHTML = `
     <header>
-      <link rel="stylesheet" href="css/styles.css">
+      <link rel="stylesheet" href="../css/styles.css">
       <section class="topper">
           <h1>Cooking</h1>
           <div id="menuToggler">&#8801;</div> 
           <nav id="menu">
             <a href="home.html">Home</a>
-            <a href="recipes.html">Recipes</a>
+            <a href="searchPage.html">Search</a>
             <a href="discover.html">Discover</a>
-            <a href="about.html">About</a>
+            <a href="recipePage.html">Recipes</a>
           </nav> 
           <section class="search">
             <input id="myQuery"  type="text" onfocus="this.value=''" placeholder="Search..." aria-label="search">
@@ -53,7 +53,11 @@ function generateHeader() {
 function generateFooter() {
   const template = document.createElement('template');
   template.innerHTML = `
-    <footer></footer>
+  <footer>
+    <nav>
+        <a href="about.html">About</a>
+    </nav>
+  </footer>
   `
   document.body.appendChild(template.content);
 }
@@ -62,7 +66,7 @@ function generateHome() {
   const template = document.createElement('template');
   template.innerHTML = `
     <section class="hero">
-      <img src="pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
+      <img src="../pictures/hero_image.jpeg" alt="hero_image" class="heroImage">
       <p class="heroText">Cooking Made Simple</p>
     </section>
     <form class="signup">
@@ -71,12 +75,12 @@ function generateHome() {
       <input type="submit" value="Sign-up" id="emailSubmitButton">
     </form>
     <section class="suggestionTiles">
-      <img src="pictures/best-chopping-boards-lead.jpg" alt="chopping_board" class="boardImage">
+      <img src="../pictures/best-chopping-boards-lead.jpg" alt="chopping_board" class="boardImage">
       <p class="boardImageText">10 basic choppping techniques</p>
       <section class="suggestionLittleImg">
-          <img src="pictures/gnocchi-bake.jpg" alt="gnocci-bake_image" class="gnocci-bakeImage">
+          <img src="../pictures/gnocchi-bake.jpg" alt="gnocci-bake_image" class="gnocci-bakeImage">
           <p class="gnocciImageText">Italian recipe inspirations</p>
-          <img src="pictures/meatballs.jpg" alt="meatballs" class="meatballsImage">
+          <img src="../pictures/meatballs.jpg" alt="meatballs" class="meatballsImage">
           <p class="meatballImageText">Secrets to the perfect meatball</p>
       </section>
     </section>
@@ -106,7 +110,7 @@ function generateAbout() {
   document.body.appendChild(template.content);
 }
 
-function generateRecipes() {
+function generateSearchPage() {
   const template = document.createElement('template');
   template.innerHTML = `
     <section class="recipeSearch">
@@ -114,7 +118,7 @@ function generateRecipes() {
       <input id="searchRecipe"  type="text"  onfocus="this.value=''" placeholder="Search..." aria-label="search">
       <button class="searchButton">&#128269;</button>
     </section>
-    <section class="recipeTiles"></section>
+    <section class="searchTiles"></section>
   `
   document.body.appendChild(template.content);
   searchRecipe.addEventListener('change', doSearch);
@@ -166,6 +170,17 @@ function generateDiscover() {
   }
 }
 
+
+function generateRecipePage() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+  <p>This is the recipes page </p>
+  `
+  document.body.appendChild(template.content);
+} 
+  
+
+
 function generateDefault() {
   const template = document.createElement('template');
   template.innerHTML = `
@@ -186,22 +201,27 @@ function generateMain(pageName) {
       generateAbout()
       break;
 
-    case "recipes":
-      generateRecipes()
+    case "searchPage":
+      generateSearchPage()
       break; 
 
     case "discover":
       generateDiscover()
       break;  
+
+    case "recipePage":
+      generateRecipePage()
+      break;
   
     default:
       generateDefault()
       break;
+      
   }
 }
 
 function getPageName() {
-  let path = window.location.pathname;
+  let path =  window.location.pathname;
   let page = path.split("/").pop();
   let pageName = page.split(".")[0]
   return pageName;
