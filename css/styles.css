@@ -186,13 +186,19 @@ img.heroImage {
 
 .searchTiles h3, .suggestionTiles p{
   position: absolute;
-  transform: translate(0%, 300%);
   padding-right: 0.5em;
   font-size: 0.75em;
   width: fit-content;
   color: white;
   background-color: var(--dark);
   width: 42%;
+}
+
+.searchTiles h3 {
+  transform: translate(0%, -300%);
+}
+.suggestionTiles p {
+  transform: translate(0%, 300%);
 }
 
 .discoverTiles section {
@@ -391,6 +397,10 @@ button[id$="RightButton"] {
   display: none;
 }
 
+article.searchTiles img:hover {
+  filter: blur(2px);
+}
+
 /* DESKTOP STYLES */
 
 @media screen and (max-width: 499px) {
@@ -582,6 +592,9 @@ button[id$="RightButton"] {
   #recipePage {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    width: 80vw;
+    justify-content: space-between;
   }
 
   #recipeTop {
@@ -614,6 +627,10 @@ button[id$="RightButton"] {
   #quickSummary h2{
     width: inherit;
     font-size: 2em;
+  }
+
+  #recipeSummary {
+    bottom: 20px;
   }
 
 

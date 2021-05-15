@@ -59,7 +59,10 @@ function generateHeader() {
     </header>
   `
   document.body.appendChild(template.content);
-  menuToggler.addEventListener('click', ev => {
+  let menuToggler = document.getElementById("menuToggler");
+  let menu = document.getElementById("menu");
+  let myQuery = document.getElementById("myQuery");
+  menuToggler.addEventListener('click', () => {
     menu.classList.toggle('open');
   });
   myQuery.addEventListener('change', doSearch);
@@ -110,6 +113,7 @@ function generateHome() {
     </section>
   `
   document.body.appendChild(template.content);
+  let emailInput = document.getElementById("emailInput");
   emailInput.addEventListener('change', emailAlert);
 }
 
@@ -145,7 +149,26 @@ function generateSearchPage() {
     <section class="searchTiles"></section>
   `
   document.body.appendChild(template.content);
-  searchRecipe.addEventListener('change', doSearch);
+  let searchRecipe = document.getElementById("searchRecipe");
+  searchRecipe.addEventListener('change', () => {
+    doSearch(() => {
+      addTileEventListener("baconTiles");
+    });
+  });
+}
+
+function addTileEventListener(tileContainerName){
+  let searchTiles = document.getElementById(tileContainerName);
+  for(let article of searchTiles.children){
+    article.addEventListener('click', () => {
+      for(let child of article.children){
+        if(child.nodeName == "H3"){
+          storeRecipePageData(child.innerText);
+          window.location.href = "recipePage.html";
+        }
+      }
+    })
+  }
 }
 
 function generateDiscover() {
@@ -196,36 +219,20 @@ function generateDiscover() {
 
 
 function generateRecipePage() {
-  const template = document.createElement('template');
-  template.innerHTML = `
-  <section id="recipePage">
-    <section id="recipeTop">
-        <img id="recipeImage" src="../pictures/meatballs.jpg" alt="recipe-image">
-        <section id="quickSummary">
-            <h2 id="recipeTitle">Placeholder</h2>
-            <section id="recipeNumbers">
-                <h3 id="cookingTime">Cook Time</h3>
-                <h3 id="preperationTime">Prep Time</h3>
-                <h3 id="servings">Servings</h3>
-            </section>
-            <h3>Cuisines</h3>
-            <p id="recipeCuisines"></p>
-            <h3>Dietary Req.</h3>
-            <p id="dietaryRequirements"></p>
-        </section>
-    </section>
-    <section id="recipeSummary"></section>
-    <a id="URLToRecipe"></a>
-  </section>
-  `
-  document.body.appendChild(template.content);
+  let recipePageDOM = generateRecipePageDOM();
+  let recipePageJSON = localStorage.getItem("recipePageJSON");
+  let recipePageData = JSON.parse(recipePageJSON);
+  recipePageDOM.content.getElementById("recipeImage").src = recipePageData["recipe"]["recipeImage"];
+  recipePageDOM.content.getElementById("recipeTitle").innerHTML = recipePageData["recipe"]["recipeTitle"];
+  recipePageDOM.content.getElementById("cookingTime").innerHTML = recipePageData["recipe"]["cookingTime"];
+  recipePageDOM.content.getElementById("preperationTime").innerHTML = recipePageData["recipe"]["preperationTime"];
+  recipePageDOM.content.getElementById("servings").innerHTML = recipePageData["recipe"]["servings"];
+  recipePageDOM.content.getElementById("recipeCuisines").innerHTML = recipePageData["recipe"]["recipeCuisines"];
+  recipePageDOM.content.getElementById("dietaryRequirements").innerHTML = recipePageData["recipe"]["dietaryRequirements"];
+  recipePageDOM.content.getElementById("recipeSummary").innerHTML = recipePageData["recipe"]["recipeSummary"];
+  recipePageDOM.content.getElementById("urlToRecipe").innerHTML = `<p> ${recipePageData["recipe"]["urlToRecipe"]} </p>`;
+  document.body.appendChild(recipePageDOM.content);
 } 
-
-function populateRecipePage(recipeTile){
-  let recipe = localStorage.getItem(`${recipeName}*`);
-  recipeImage.src = recipe[image];
-}
-
 
 function generateDefault() {
   const template = document.createElement('template');
@@ -282,14 +289,15 @@ window.onload = function() {
 
 async function buildTileFromData(recipe) {
   const tile = document.createElement("article");
-  const tileContainer = document.createElement("section")
+  const link = document.createElement("a");
   const img = document.createElement("img");
   const recipeInformation = await getRecipeInfo(recipe.id);
   buildRecipePageData(recipeInformation);
+  // link.href = "recipePage.html";
   img.src = recipeInformation.image;
   img.alt = recipeInformation.title.substring(0, 20);
-  tileContainer.appendChild(img);
-  tile.appendChild(tileContainer);
+  link.appendChild(img);
+  tile.appendChild(link);
   return tile;
 }
 
@@ -303,19 +311,16 @@ function buildRecipePageData(recipeInformation){
 }
 
 function buildTileData(tile) {
-  const tileContainer = tile.firstChild;
   const title = document.createElement("h3");
   title.innerHTML = `${tile.firstChild.firstChild.alt}`;
-  tileContainer.classList.add("tileTitle")
-  tileContainer.appendChild(title);
-  return tileContainer;
+  tile.appendChild(title);
+  return tile;
 }
 
 async function insertTile(recipe, recipeType) {
   const tileClass = document.getElementById(`${recipeType}Tiles`);
-  const tile = await buildTileFromData(recipe);
-  const tileData = buildTileData(tile);
-  tile.appendChild(tileData);
+  const tileStructure = await buildTileFromData(recipe);
+  const tile = buildTileData(tileStructure);
   tileClass.appendChild(tile);
 }
 
@@ -384,14 +389,20 @@ async function getRecipeInfo(id){
 }
 
 
-async function doSearch(ev) {
+async function doSearch(callback) {
   clearResults();
+  let myQuery =  document.getElementById("myQuery");
+  let searchRecipe = document.getElementById("searchRecip");
   const recipeType =((myQuery.value == "") ? searchRecipe.value : myQuery.value);
   const limit = 12;
   const result = await loadSearch(recipeType, limit);
   const homeSection = document.getElementsByClassName("searchTiles");
-  homeSection[0].id = `${recipeType}Tiles`;
+  let tileContainerName = `${recipeType}Tiles`;
+  homeSection[0].id = tileContainerName;
   result.results.forEach(recipe => insertTile(recipe, recipeType));
+  setTimeout(function (tileContainerName) {
+    callback(tileContainerName);
+  }, 2000);
 }
 
 
@@ -403,6 +414,7 @@ function clearResults() {
 }
 
 function emailAlert() {
+  let emailInput = document.getElementById("emailInput");
   alert(`Using email: ${emailInput.value} to signup \n Unfortunately, this feature is still under construction`);
 }
 
@@ -453,4 +465,51 @@ function displayNextTile(n, bannerType) {
       }
     }
   }
+}
+
+function generateRecipePageDOM(){
+  const template = document.createElement('template');
+  template.innerHTML = `
+  <section id="recipePage">
+    <section id="recipeTop">
+        <img id="recipeImage" src="../pictures/meatballs.jpg" alt="recipe-image">
+        <section id="quickSummary">
+            <h2 id="recipeTitle">Placeholder</h2>
+            <section id="recipeNumbers">
+                <h3 id="cookingTime">Cook Time</h3>
+                <h3 id="preperationTime">Prep Time</h3>
+                <h3 id="servings">Servings</h3>
+            </section>
+            <h3>Cuisines</h3>
+            <p id="recipeCuisines"></p>
+            <h3>Dietary Req.</h3>
+            <p id="dietaryRequirements"></p>
+        </section>
+    </section>
+    <section id="recipeSummary"></section>
+    <a id="urlToRecipe"></a>
+  </section>
+  `
+  return template;
+}
+
+function storeRecipePageData(recipeName){
+  let recipeJSON = localStorage.getItem(`${recipeName}`);
+  let recipe = JSON.parse(recipeJSON);
+  let recipePageJSONDOM = 
+    { 
+      "recipe":{
+        "recipeImage" : recipe["image"],
+        "recipeTitle" : recipe["title"],
+        "cookingTime" : recipe["cookingMinutes"],
+        "preperationTime" : recipe["preparationMinutes"],
+        "servings" : recipe["servings"],
+        "recipeCuisines" : recipe["cuisines"],
+        "dietaryRequirements" : recipe["diets"],
+        "recipeSummary" : recipe["summary"],
+        "urlToRecipe" : recipe["url"],
+      }
+  }
+  let recipePageJSON = JSON.stringify(recipePageJSONDOM);
+  localStorage.setItem("recipePageJSON" ,recipePageJSON);
 }
