@@ -187,7 +187,7 @@ function generateDiscover() {
   document.body.appendChild(template.content);
   buildBanners(function(){
     if(window.screen.width < 500){
-      displayInitalTiles;
+      displayInitalTiles();
     }else{
       return;
     }
@@ -223,17 +223,61 @@ function generateRecipePage() {
   let recipePageDOM = generateRecipePageDOM();
   let recipePageJSON = localStorage.getItem("recipePageJSON");
   let recipePageData = JSON.parse(recipePageJSON);
+  // let populatedRecipePage = assignRecipeData(recipePageDOM, recipePageData);
   recipePageDOM.content.getElementById("recipeImage").src = recipePageData["recipe"]["recipeImage"];
   recipePageDOM.content.getElementById("recipeTitle").innerHTML = recipePageData["recipe"]["recipeTitle"];
-  recipePageDOM.content.getElementById("cookingTime").innerHTML = recipePageData["recipe"]["cookingTime"];
-  recipePageDOM.content.getElementById("preperationTime").innerHTML = recipePageData["recipe"]["preperationTime"];
-  recipePageDOM.content.getElementById("servings").innerHTML = recipePageData["recipe"]["servings"];
+  recipePageDOM.content.getElementById("cookingTime").innerHTML += recipePageData["recipe"]["cookingTime"];
+  recipePageDOM.content.getElementById("preperationTime").innerHTML += recipePageData["recipe"]["preperationTime"];
+  recipePageDOM.content.getElementById("servings").innerHTML += recipePageData["recipe"]["servings"];
   recipePageDOM.content.getElementById("recipeCuisines").innerHTML = recipePageData["recipe"]["recipeCuisines"];
   recipePageDOM.content.getElementById("dietaryRequirements").innerHTML = recipePageData["recipe"]["dietaryRequirements"];
-  recipePageDOM.content.getElementById("recipeSummary").innerHTML = recipePageData["recipe"]["recipeSummary"];
-  recipePageDOM.content.getElementById("urlToRecipe").innerHTML = `<p> ${recipePageData["recipe"]["urlToRecipe"]} </p>`;
+  recipePageDOM.content.getElementById("recipeSummary").innerHTML = `<p>${recipePageData["recipe"]["recipeSummary"]}</p>`;
+  recipePageDOM.content.getElementById("urlToRecipe").href = recipePageData["recipe"]["urlToRecipe"];
   document.body.appendChild(recipePageDOM.content);
-} 
+}
+
+// function assignRecipeData(recipePageDOM, recipePageData){
+//   let recipePageStructure = recipePageDOM.content.children["recipePage"];
+//   const recipePageDataDict = recipePageData["recipe"];
+//   // for(element in recipePageStructure.children){
+//   function assignData(element) {
+//     // debugger;
+//     switch(element.children.length){
+//       case 0:
+//         debugger;
+//         if(element.nodeName = "IMG"){
+//           element.src = recipePageDataDict[element.id];
+//           return;
+//         }
+//         else{
+//           if(element.id == "recipeSummary"){
+//             element.innerHTML = `<p>${recipePageDataDict[element.id]}</p>`;
+//             return;
+//           }
+//           element.innerHTML = recipePageDataDict[element.id];
+//           return;
+//         }
+//       case (this > 0):
+//         debugger;
+//         for(child in element.children){
+//           assignData(child);
+//         }
+//       default:
+//         return;
+
+//     }
+//   }
+//   assignData(recipePageStructure);
+//   recipePageDOM.content.children["recipePage"] = recipePageStructure;
+//   return recipePageDOM;
+// }
+
+function isUndefinded(value){
+  if(value == undefined){
+    return true;
+  }
+  return false;
+}
 
 function generateDefault() {
   const template = document.createElement('template');
@@ -403,7 +447,7 @@ async function doSearch(callback) {
   result.results.forEach(recipe => insertTile(recipe, recipeType));
   setTimeout(function (tileContainerName) {
     callback();
-  }, 2000);
+  }, 1000);
 }
 
 
@@ -433,7 +477,7 @@ function displayInitalTiles(){
       if(childElement.id.includes("Tiles")){
         const tiles =  childElement.children;
         if(tiles.length == 0){
-          continue
+          continue;
         }
         for (i = 0; i < tiles.length; i++) {tiles[i].style.display = "none"}
         tiles[0].style.display = "flex";  
@@ -477,18 +521,32 @@ function generateRecipePageDOM(){
         <section id="quickSummary">
             <h2 id="recipeTitle">Placeholder</h2>
             <section id="recipeNumbers">
-                <h3 id="cookingTime">Cook Time</h3>
-                <h3 id="preperationTime">Prep Time</h3>
-                <h3 id="servings">Servings</h3>
+                <h3 id="cookTimeLabel">Cook Time</h3>
+                <h3 id="prepTimeLabel" >Prep Time</h3>
+                <h3 id="servingsLabel" >Servings</h3>
+                <p id="cookingTime"></p>
+                <p id="preperationTime"></p>
+                <p id="servings"></p>
             </section>
             <h3>Cuisines</h3>
             <p id="recipeCuisines"></p>
-            <h3>Dietary Req.</h3>
+            <h3>Dietary Notice.</h3>
             <p id="dietaryRequirements"></p>
         </section>
     </section>
     <section id="recipeSummary"></section>
-    <a id="urlToRecipe"></a>
+    <section id="recipeInstructions">
+        <section id="recipeIngredients">
+            <h3>Ingredients</h3>
+            <p>This is where the ingredient list will go</p>
+        </section>
+        <section id="recipeMethod">
+            <h3>Method</h3>
+            <p>This is where the list of instructions will go</p>
+        </section>
+        </section>
+    <a id="urlToRecipe">Link to orignal recipe</a>
+    <section id="bannerTiles"></section>
   </section>
   `
   return template;
@@ -508,7 +566,7 @@ function storeRecipePageData(recipeName){
         "recipeCuisines" : recipe["cuisines"],
         "dietaryRequirements" : recipe["diets"],
         "recipeSummary" : recipe["summary"],
-        "urlToRecipe" : recipe["url"],
+        "urlToRecipe" : recipe["sourceUrl"],
       }
   }
   let recipePageJSON = JSON.stringify(recipePageJSONDOM);
