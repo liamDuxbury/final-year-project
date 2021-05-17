@@ -1,3 +1,4 @@
+
 class Recipe{
   constructor(){
       this.cheap = null; // false
@@ -392,7 +393,7 @@ async function getRecipeInfo(id){
 async function doSearch(callback) {
   clearResults();
   let myQuery =  document.getElementById("myQuery");
-  let searchRecipe = document.getElementById("searchRecip");
+  let searchRecipe = document.getElementById("searchRecipe");
   const recipeType =((myQuery.value == "") ? searchRecipe.value : myQuery.value);
   const limit = 12;
   const result = await loadSearch(recipeType, limit);
@@ -401,7 +402,7 @@ async function doSearch(callback) {
   homeSection[0].id = tileContainerName;
   result.results.forEach(recipe => insertTile(recipe, recipeType));
   setTimeout(function (tileContainerName) {
-    callback(tileContainerName);
+    callback();
   }, 2000);
 }
 
