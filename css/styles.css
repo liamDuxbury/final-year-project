@@ -29,9 +29,12 @@ header, footer{
 }
 
 footer {
-  height: 5vw;
-  position:relative;
-  width:100vw;
+  height: 4em;
+  position: relative;
+  width: 100vw;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
 }
 
 h1 {
@@ -67,10 +70,11 @@ nav a {
   color: ghostwhite;
   text-decoration: none;
   font-weight: bold;
-  padding: 1em;
+  padding: 0.5em;
   width: 100vw;
   text-align: center;
   transition: background-color 0.7s;
+  left: 0.5em;
 }
 
 nav a:hover {
@@ -165,7 +169,7 @@ img.heroImage {
   padding: 0.2em
 }
 
-.recipeTiles section {
+.searchTiles section {
   display: grid;
   align-content: center;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -174,21 +178,27 @@ img.heroImage {
   padding: 1em;
 }
 
-.recipeTiles img {
+.searchTiles img {
   width: 100%;
   height: 150px;
   object-fit: cover;
 }
 
-.recipeTiles h3, .suggestionTiles p{
+.searchTiles h3, .suggestionTiles p{
   position: absolute;
-  transform: translate(0%, 300%);
   padding-right: 0.5em;
   font-size: 0.75em;
   width: fit-content;
   color: white;
   background-color: var(--dark);
   width: 42%;
+}
+
+.searchTiles h3 {
+  transform: translate(0%, -300%);
+}
+.suggestionTiles p {
+  transform: translate(0%, 300%);
 }
 
 .discoverTiles section {
@@ -208,7 +218,7 @@ img.heroImage {
   padding-bottom: 1em;
 }
 
-.discoverTiles h2, h3 {
+.discoverTiles h2 + h3, h3 {
   position: absolute;
   padding-right: 0.5em;
   width:min-content;  
@@ -363,6 +373,34 @@ button[id$="RightButton"] {
   right: 0.5em;
 }
 
+/* .footerNav {
+  position: relative;
+  display: unset;
+  flex-direction: unset;
+  background-color: var(--dark);
+  font-size: 1em;
+  opacity: 1;
+  color: ghostwhite;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5em;
+  width: 3em;
+  text-align: center;
+  transition: background-color 0.7s;
+  bottom: 0.5em;
+  left: unset;
+  top: 95vh;
+  right: 500px;
+
+} */
+.footerNav {
+  display: none;
+}
+
+article.searchTiles img:hover {
+  filter: blur(2px);
+}
+
 /* DESKTOP STYLES */
 
 @media screen and (max-width: 499px) {
@@ -430,7 +468,7 @@ button[id$="RightButton"] {
     width: 60vw;
   }
 
-  .recipeTiles {
+  .searchTiles {
     display: grid;
     align-content: center;
     grid-column-gap: 1em;
@@ -438,7 +476,7 @@ button[id$="RightButton"] {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
   
-  .recipeTiles img {
+  .searchTiles img {
     width: 100%;
     height: 300px;
   }
@@ -457,7 +495,7 @@ button[id$="RightButton"] {
     transform: translate(0%, -70%);
   }
 
-  .recipeTiles h3 {
+  .searchTiles h3 {
     font-size: 1em;
   }
 
@@ -516,6 +554,7 @@ button[id$="RightButton"] {
   }
 
   footer {
+    height: 4.4em;
     width:80vw;
     bottom:0px;
   }
@@ -545,6 +584,56 @@ button[id$="RightButton"] {
   .navButton {
     display: none;
   }
+  
+  .footerNav {
+    display: unset;
+  }
+
+  #recipePage {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80vw;
+    justify-content: space-between;
+  }
+
+  #recipeTop {
+    display: grid;
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
+    grid-template-columns: minmax(max-content, 1fr) 4fr;
+    padding: 2em;
+  }
+
+  #recipeImage {
+    grid-column: 1/2;
+  }
+
+  #quickSummary {
+    grid-column: 2/4;
+  }
+
+  #quickSummary h3{
+    position: unset;
+    width: inherit;
+    align-items: center;
+  }
+
+  #quickSummary h3 + p + h2{
+    padding: 0;
+    margin: 0;
+  }
+
+  #quickSummary h2{
+    width: inherit;
+    font-size: 2em;
+  }
+
+  #recipeSummary {
+    bottom: 20px;
+  }
+
+
 }
 
 /* DESKTOP STYLES */
@@ -579,7 +668,7 @@ button[id$="RightButton"] {
     font-size: 4em;
   }
 
-  .recipeTiles h3 {
+  .searchTiles h3 {
     width: 17vw;
   }
 
