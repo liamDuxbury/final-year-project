@@ -1,4 +1,7 @@
 
+// var connectionString = "postgres://postgres:blackheadphones@localhost/127.0.0.0:5432/cooking-platform";
+// var pgClient = pg.Client(connectionString);
+// pgClient.connet();
 class Recipe{
   constructor(){
       this.cheap = null; // false
@@ -36,7 +39,7 @@ let apiHeaders =  {
 const baseRecipeURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes`;
 
 const disoverTopics = ["Vegetarian", "Japanese", "Noodles", "Indian", "BBQ"]; 
-let tileIndex = 1;
+
 
 function generateHeader() {
   const template = document.createElement('template');
@@ -56,6 +59,9 @@ function generateHeader() {
             <input id="myQuery"  type="text" onfocus="this.value=''" placeholder="Search..." aria-label="search">
             <button class="searchButton" id="searchButton">&#128269;</button>
           </section>
+          <nav id="menu">
+          <a href="loginPage.html">Login/Signup</a>
+        </nav>
       </section> 
     </header>
   `
@@ -84,6 +90,7 @@ function generateFooter() {
   <footer>
     <nav>
         <a href="about.html" class="footerNav">About</a>
+        <a href="createRecipePage.html" class="footerNav">Create</a>
     </nav>
   </footer>
   `
@@ -272,6 +279,38 @@ function generateRecipePage() {
 //   return recipePageDOM;
 // }
 
+function generateCreateRecipe() {
+  const template = document.createElement('template');
+  template.innerHTML = `
+  <section id="createRecipeForm">
+    <h2>Create a Recipe!</h2>
+    <label for="recipeImage">Image</label>
+    <input type="text" id="recipeImageInput"> 
+    <button id="chooseFile">Choose File</button>
+    <label for="recipeTitle">Title</label>
+    <input type="text" id="recipeTitleInput"> 
+    <label for="cookingTime">Cooking Time</label>
+    <input type="number" id="cookingTimeInput"> 
+    <label for="preperationTime">Preparation Time</label>
+    <input type="number" id="preperationTimeInput"> 
+    <label for="servings">Servings</label>
+    <input type="text" id="servingsInput"> 
+    <label for="recipeCuisines">Cuisines</label>
+    <input type="text" id="recipeCuisinesInput"> 
+    <label for="dietaryRequirements">Diet Requirements</label>
+    <input type="text" id="dietaryRequirementsInput"> 
+    <label for="recipeSummary">Summary</label>
+    <input type="text" id="recipeSummaryInput"> 
+    <label for="ingredients">Ingredients</label>
+    <input type="text" id="ingredientsInput"> 
+    <label for="method">Method</label>
+    <input type="text" id="methodInput"> 
+  </section>
+  `
+  document.body.appendChild(template.content);
+}
+
+
 function isUndefinded(value){
   if(value == undefined){
     return true;
@@ -309,6 +348,10 @@ function generateMain(pageName) {
 
     case "recipePage":
       generateRecipePage()
+      break;
+    
+    case "createRecipePage":
+      generateCreateRecipe()
       break;
   
     default:
@@ -395,7 +438,7 @@ async function insertRecipeBanner(recipeType) {
   const banner = await buildBannerFromRecipeType(recipeType);
   const bannerTiles = document.getElementById("bannerTiles");
   bannerTiles.appendChild(banner);
-  const limit = 6;
+  const limit = 7;
   const result = await loadSearch(recipeType, limit);
   result.results.forEach(recipe => insertTile(recipe, recipeType));
 }
@@ -464,7 +507,8 @@ function emailAlert() {
 }
 
 function nextTile(n, bannerType) {  
-    displayNextTile(tileIndex += n, bannerType); 
+  let tileIndex = 1;
+  displayNextTile(tileIndex += n, bannerType); 
 }  
 
 function displayInitalTiles(){
@@ -487,7 +531,8 @@ function displayInitalTiles(){
 }
 
 function displayNextTile(n, bannerType) {  
-  let i;  
+  let i;
+  let tileIndex = 1;  
   const bannerContainer = document.getElementById("bannerTiles");
   const children = bannerContainer.children;
   for(const banner of children){
@@ -538,11 +583,17 @@ function generateRecipePageDOM(){
     <section id="recipeInstructions">
         <section id="recipeIngredients">
             <h3>Ingredients</h3>
-            <p>This is where the ingredient list will go</p>
+            <p>
+                <li>
+                </li>
+            </p>
         </section>
         <section id="recipeMethod">
             <h3>Method</h3>
-            <p>This is where the list of instructions will go</p>
+            <p>
+                <li>
+                </li>
+            </p>
         </section>
         </section>
     <a id="urlToRecipe">Link to orignal recipe</a>

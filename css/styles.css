@@ -14,7 +14,6 @@
   --lighter: hsl(var(--hue), 80%, 95%);
   --pageWidth: 80vw;
 }
-
 body {
   font-family: 'Kiwi Maru', serif;
   background: #cfc;;
@@ -34,7 +33,7 @@ footer {
   position: relative;
   width: 100vw;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: flex-end;
 }
 
@@ -77,6 +76,7 @@ nav a, #recipePage a {
   transition: background-color 0.7s;
   left: 0.5em;
 }
+
 
 nav a:hover {
   background-color: var(--light);
@@ -225,7 +225,7 @@ img.heroImage {
   padding-bottom: 1em;
 }
 
-.discoverTiles h2, h3 {
+.discoverTiles h2, h3{
   position: absolute;
   padding-right: 0.5em;
   color: white;
@@ -747,6 +747,52 @@ article.searchTiles img:hover {
   #servingLabel {
     grid-column: 3;
   }
+
+  #createRecipeForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 1em;
+    row-gap: 1em;
+    padding-bottom: 1em;
+  }
+  
+  #createRecipeForm label {
+    right: 0;
+    grid-column: 1;
+   
+  }
+
+  #createRecipeForm input {
+    grid-column: 2 / 4;
+    border: none;
+  }
+
+  #createRecipeForm h2 {
+    grid-column: 1/4;
+    padding: 0.5em;
+    margin: 0;
+    text-align: center;
+  }
+
+  #createRecipeForm label {
+    padding-right: 0.5em;
+    color: white;
+    background-color: var(--dark);
+    width: auto;
+    text-align: center;
+    padding: 1em;
+  }
+
+  #chooseFile{
+    grid-column: 3;
+    border: none;
+  }
+
+  input#recipeImageInput {
+      grid-column: 2;
+  }
+
+  
 }
 
 /* DESKTOP STYLES */
